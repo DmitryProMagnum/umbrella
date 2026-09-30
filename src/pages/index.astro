@@ -1,0 +1,46 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Problem from '../components/Problem.astro';
+import How from '../components/How.astro';
+import Modules from '../components/Modules.astro';
+import Finance from '../components/Finance.astro';
+import Projects from '../components/Projects.astro';
+import People from '../components/People.astro';
+import Groups from '../components/Groups.astro';
+import Ai from '../components/Ai.astro';
+import Implementation from '../components/Implementation.astro';
+import Demo from '../components/Demo.astro';
+import Footer from '../components/Footer.astro';
+import silk from '../assets/img/silk.jpg';
+
+const og = await getImage({ src: silk, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+---
+<Base
+  preloadImages={[
+    { href: '/video/hero-poster.webp', media: '(min-width: 768px)', type: 'image/webp' },
+    { href: '/video/hero-poster-mobile.webp', media: '(max-width: 767.98px)', type: 'image/webp' },
+  ]}
+  ogImage={og.src}
+>
+  <Header />
+  <main id="main">
+    <Hero />
+    <Problem />
+    <How />
+    <Modules />
+    <Finance />
+    <Projects />
+    <People />
+    <Groups />
+    <Ai />
+    <Implementation />
+    <Demo />
+  </main>
+  <Footer />
+  <script>
+    import '../scripts/main.ts';
+  </script>
+</Base>

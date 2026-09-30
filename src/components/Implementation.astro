@@ -1,0 +1,50 @@
+---
+import { home } from '../content/home';
+import { isPlaceholder } from '../lib/typo';
+import Lines from './Lines.astro';
+
+const s = home.implementation;
+---
+<section class="section bg-light on-light" id="implementation" aria-labelledby="impl-title">
+  <div class="container">
+    <div class="sec-head" style="margin-bottom:clamp(32px, 20px + 3vw, 56px)">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="impl-title"><Lines text={s.title} /></h2>
+      </div>
+      <p class="lead" data-reveal style="--i:1">{s.lead}</p>
+    </div>
+
+    <ol class="steps" data-anim>
+      {s.steps.map((st, i) => {
+        const last = i === s.steps.length - 1;
+        return (
+          <li class:list={['step', { 'step--last': last }]} data-reveal style={`--i:${i}`}>
+            <div class="step__top">
+              <span class="step__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {!last && (
+                <span class="step__dash" aria-hidden="true">
+                  <span class="step__fill"></span>
+                  <span class="step__run"></span>
+                </span>
+              )}
+            </div>
+            <div>
+              <h3><span class="sr-only">Шаг {i + 1}. </span>{st.title}</h3>
+              <p>{st.text}</p>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
+
+    <div class="facts" data-reveal>
+      {s.facts.map((f) => (
+        <div class="fact">
+          <span class="fact__l">{f.label}</span>
+          <span class:list={[{ 'ph ph--light': isPlaceholder(f.value) }]}>{f.value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

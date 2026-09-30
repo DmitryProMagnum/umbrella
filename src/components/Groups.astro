@@ -1,0 +1,60 @@
+---
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+import Mark from './Mark.astro';
+
+const s = home.groups;
+const f = s.feature;
+---
+<section class="section bg-white on-light" id="groups" aria-labelledby="groups-title">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="groups-title"><Lines text={s.title} /></h2>
+      </div>
+      <p class="lead" data-reveal style="--i:1">{s.lead}</p>
+    </div>
+
+    <div class="bento">
+      <article class="bento__feature" data-reveal>
+        <div class="feature__text">
+          <span class="outline-badge">{f.badge}</span>
+          <h3><Lines text={f.title} /></h3>
+          <p>{f.text}</p>
+        </div>
+        <div class="tree" aria-hidden="true" data-anim>
+          <Mark size={72} class="tree__mark" />
+          <svg class="tree__lines d-only" viewBox="0 0 120 236" width="120" height="236" fill="none" stroke="#4D4D4D" stroke-width="1.2" stroke-dasharray="4 4">
+            <path d="M0 118 C 60 118, 60 40, 120 40" /><path d="M0 118 C 60 118, 60 92, 120 92" />
+            <path d="M0 118 C 60 118, 60 144, 120 144" /><path d="M0 118 C 60 118, 60 196, 120 196" />
+          </svg>
+          <svg class="tree__lines m-only" viewBox="0 0 80 196" width="80" height="196" fill="none" stroke="#4D4D4D" stroke-width="1.2" stroke-dasharray="4 4">
+            <path d="M0 98 C 40 98, 40 20, 80 20" /><path d="M0 98 C 40 98, 40 72, 80 72" />
+            <path d="M0 98 C 40 98, 40 124, 80 124" /><path d="M0 98 C 40 98, 40 176, 80 176" />
+          </svg>
+          {f.companies.map((co) => <div class="tree__node">{co}</div>)}
+          <div class="tree__node tree__node--more">{f.more}</div>
+        </div>
+      </article>
+
+      <div class="roles">
+        {s.roles.map((r, i) => (
+          <article class="role" data-reveal style={`--i:${i % 3}`}>
+            <span class="icon-box"><Icon name={r.icon} size={22} /></span>
+            <div>
+              <h3>{r.title}</h3>
+              <p>{r.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="bento__cta" data-reveal style="--i:2">
+        <p class="bento__cta-title">{s.cta.title}</p>
+        <a class="btn btn--dark" href="#demo" data-goal="demo_click">{s.cta.button}<Icon name="arrow" size={18} stroke={1.8} /></a>
+      </div>
+    </div>
+  </div>
+</section>

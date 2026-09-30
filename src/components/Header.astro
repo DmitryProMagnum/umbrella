@@ -1,0 +1,46 @@
+---
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
+
+const { nav, header, links } = home;
+---
+<header class="site-header" data-header>
+  <div class="container site-header__row">
+    <a href="/" class="site-header__logo" aria-label={header.homeLabel}>
+      <img src={logo.src} width="247" height="26" alt="umbrellacorp.ai" />
+    </a>
+    <nav class="nav" aria-label="Основная навигация">
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-header__actions">
+      <a class="site-header__login" href={links.login}>{header.login}</a>
+      <a class="btn btn--primary btn--sm site-header__cta" href="#demo" data-goal="demo_click">{header.cta}</a>
+      <button type="button" class="burger" aria-label={header.menuOpen} aria-expanded="false" aria-controls="mnav" data-menu-open>
+        <Icon name="menu" size={20} stroke={1.7} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Меню" data-menu inert>
+  <div class="mnav__top">
+    <a href="/" aria-label={header.homeLabel}><img src={logo.src} width="190" height="20" alt="umbrellacorp.ai" /></a>
+    <button type="button" class="burger" aria-label={header.menuClose} data-menu-close>
+      <Icon name="close" size={20} stroke={1.7} />
+    </button>
+  </div>
+  <nav aria-label="Мобильная навигация">
+    <ul class="mnav__list">
+      {nav.map((item) => (
+        <li><a href={item.href} data-menu-link>{item.label}<Icon name="arrow" size={22} /></a></li>
+      ))}
+    </ul>
+  </nav>
+  <div class="mnav__bottom">
+    <a class="btn btn--primary" href="#demo" data-menu-link data-goal="demo_click">{header.cta}</a>
+    <a class="btn btn--ghost" href={links.login} data-menu-link>{header.login}</a>
+  </div>
+</div>

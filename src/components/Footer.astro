@@ -1,0 +1,50 @@
+---
+import { home } from '../content/home';
+import { isPlaceholder } from '../lib/typo';
+import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
+import wordmark from '../assets/logo/umbrellacorp-wordmark-white.svg';
+
+const s = home.footer;
+const [, company, resources] = s.columns;
+const mobileCol = {
+  title: company.title,
+  links: [...company.links.filter((l) => l.href !== '#contacts'), ...resources.links],
+};
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src={logo.src} width="266" height="28" alt="umbrellacorp.ai" />
+        <p>{s.text}</p>
+        <a class="btn btn--primary btn--md" href="#demo" data-goal="demo_click">{s.cta}</a>
+      </div>
+      <nav class="footer__nav" aria-label="Навигация в подвале">
+        {s.columns.map((col, i) => (
+          <div class:list={['fcol', { 'd-only': i > 0 }]}>
+            <h2 class="fcol__t">{col.title}</h2>
+            {col.links.map((l) => <a href={l.href}>{l.label}</a>)}
+          </div>
+        ))}
+        <!-- mobile: «Компания» и «Ресурсы» одной колонкой, как в эталоне -->
+        <div class="fcol m-only">
+          <h2 class="fcol__t">{mobileCol.title}</h2>
+          {mobileCol.links.map((l) => <a href={l.href}>{l.label}</a>)}
+        </div>
+        <div class="fcol fcol--contacts" id="contacts">
+          <h2 class="fcol__t">{s.contactsTitle}</h2>
+          {s.contacts.map((c) => <span class:list={[{ ph: isPlaceholder(c) }]}>{c}</span>)}
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__legal">
+        <span>{s.copyright}</span>
+        <a href={home.links.privacy}>{s.privacy}</a>
+        <a href={home.links.terms}>{s.terms}</a>
+      </div>
+      <span class="footer__visit">{s.visit}</span>
+    </div>
+    <img class="footer__word" src={wordmark.src} width="1360" height="162" alt="" loading="lazy" data-reveal />
+  </div>
+</footer>

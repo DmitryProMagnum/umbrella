@@ -1,0 +1,91 @@
+---
+import { Picture } from 'astro:assets';
+import { home } from '../content/home';
+import { isPlaceholder } from '../lib/typo';
+import Icon from './Icon.astro';
+import silk from '../assets/img/silk.jpg';
+
+const s = home.demo;
+const f = s.form;
+/** [endpoint — уточнить: CRM (вебхук Bitrix24), почта или свой API]. Пусто — режим демонстрации. */
+const endpoint = '';
+---
+<section class="demo-sec bg-white" id="demo" aria-labelledby="demo-title">
+  <div class="container">
+    <div class="demo" data-reveal>
+      <div class="demo__bg" aria-hidden="true">
+        <Picture src={silk} widths={[600, 1000, 1400, 2000]} sizes="(min-width: 1440px) 1360px, calc(100vw - 40px)" formats={['avif', 'webp']} alt="" loading="lazy" pictureAttributes={{ "data-parallax": "0.08" }} />
+      </div>
+      <div class="demo__shade" aria-hidden="true"></div>
+
+      <div class="demo__inner">
+        <div class="demo__copy">
+          <div class="demo__label">{s.label}</div>
+          <h2 class="demo__slogan" id="demo-title" lang="en">
+            <span class="d-only">{s.slogan.map((l, i) => <Fragment>{i > 0 && <br />}{l}</Fragment>)}</span>
+            <span class="m-only">{s.sloganMobile.map((l, i) => <Fragment>{i > 0 && <br />}{l}</Fragment>)}</span>
+          </h2>
+          <p class="demo__text">{s.text}</p>
+        </div>
+
+        <form class="form on-light" novalidate data-demo-form data-endpoint={endpoint} aria-labelledby="form-title">
+          <div>
+            <h3 class="form__title" id="form-title">{f.title}</h3>
+            <p class="form__sub">{f.subtitle}</p>
+          </div>
+
+          <p class="form__note" data-ai-note hidden>{f.aiNote}</p>
+
+          <div class="form__grid">
+            <div class="ffield">
+              <label for="d-name">{f.name.label} <span class="ffield__req" aria-hidden="true">*</span></label>
+              <input class="input" id="d-name" name="name" type="text" autocomplete="name" placeholder={f.name.placeholder} required aria-describedby="d-name-err" />
+              <span class="ffield__err" id="d-name-err" aria-live="polite"></span>
+            </div>
+            <div class="ffield">
+              <label for="d-company">{f.company.label}</label>
+              <input class="input" id="d-company" name="company" type="text" autocomplete="organization" placeholder={f.company.placeholder} />
+            </div>
+            <div class="ffield">
+              <label for="d-contact">{f.contact.label} <span class="ffield__req" aria-hidden="true">*</span></label>
+              <input class="input" id="d-contact" name="contact" type="text" inputmode="email" autocomplete="email" placeholder={f.contact.placeholder} required aria-describedby="d-contact-err" />
+              <span class="ffield__err" id="d-contact-err" aria-live="polite"></span>
+            </div>
+            <div class="ffield">
+              <label for="d-size">{f.size.label}</label>
+              <select class="input" id="d-size" name="size">
+                {f.size.options.map((o, i) => <option selected={i === 0}>{o}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <!-- honeypot -->
+          <div class="hp" aria-hidden="true">
+            <label for="d-website">Сайт</label>
+            <input id="d-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <input type="hidden" name="interest" value="" data-interest />
+
+          <p class="form__alert" role="alert" data-form-error hidden>{f.errors.network}</p>
+
+          <button class="btn btn--primary" type="submit" data-goal="demo_click">
+            <span data-submit-label>{f.submit}</span>
+            <Icon name="arrow" size={18} stroke={1.8} />
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+          <p class="form__consent">
+            {f.consentBefore}<a href={home.links.privacy}>{f.consentLink}</a>{f.consentAfter}
+          </p>
+
+          <div class="form__success" role="status" aria-live="polite" data-form-success>
+            <div class="form__success-icon"><Icon name="check" size={26} stroke={2.2} /></div>
+            <h3>{f.successTitle}</h3>
+            <p class:list={[{ 'ph ph--light': isPlaceholder(f.successText) }]} style="white-space:normal;padding:6px 10px">{f.successText}</p>
+            <button type="button" class="form__again" data-form-again>{f.again}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="form-messages" set:html={JSON.stringify({ ...f.errors, sending: f.sending, submit: f.submit })}></script>
+</section>

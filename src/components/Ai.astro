@@ -1,0 +1,34 @@
+---
+import { Picture } from 'astro:assets';
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import Mark from './Mark.astro';
+import portrait from '../assets/img/portrait.jpg';
+
+const s = home.ai;
+---
+<section class="section bg-black" id="ai" aria-labelledby="ai-title">
+  <div class="container ai">
+    <div class="ai__text">
+      <div class="eyebrow" data-reveal>{s.label}</div>
+      <span class="soon-badge" data-reveal><Icon name="sparkle" size={14} />{s.badge}</span>
+      <h2 class="h2" id="ai-title" data-reveal>
+        {s.titleLines.map((l) => <Fragment>{l}<br /> </Fragment>)}
+        <span class="mint">{s.titleAccent}</span>
+      </h2>
+      <p class="ai__lead" data-reveal style="--i:1">{s.lead}</p>
+      <a class="btn btn--ghost" href="#demo" data-ai-interest data-goal="ai_launch_click" data-reveal style="--i:2">{s.cta}<Icon name="arrow" size={18} stroke={1.8} /></a>
+    </div>
+
+    <div class="ai__media" data-reveal>
+      <div class="parallax-media">
+        <Picture src={portrait} widths={[400, 700, 1020, 1360]} sizes="(min-width: 1200px) 680px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)" formats={['avif', 'webp']} alt={s.imageAlt} loading="lazy" data-parallax="0.1" />
+      </div>
+      <div class="ai__shade" aria-hidden="true"></div>
+      <div class="ai__examples" data-anim>
+        <div class="ai__ex-title"><Mark size={22} /><span>{s.examplesTitle}</span></div>
+        {s.examples.map((ex) => <p class="bubble">{ex}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

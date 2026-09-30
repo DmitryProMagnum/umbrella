@@ -1,0 +1,70 @@
+---
+import { home } from '../content/home';
+import SplitText from './SplitText.astro';
+
+const s = home.projects;
+const c = s.card;
+const t = s.timesheet;
+const crosses = [
+  { x: 144, y: 68, cls: 'cross--d' },
+  { x: 676, y: 68, cls: 'cross--d cross--spin' },
+  { x: 68, y: 524, cls: 'cross--d' },
+  { x: 676, y: 600, cls: 'cross--d' },
+];
+---
+<section class="section bg-white on-light" id="projects" aria-labelledby="projects-title">
+  <div class="container split split--reverse">
+    <SplitText id="projects" label={s.label} title={s.title} lead={s.lead} points={s.points} more={s.more} />
+
+    <div class="split__visual" data-reveal>
+      <div class="fit" data-fit="760" data-fit-min="768" data-fit-max="1.25">
+        <div class="fit__canvas vcanvas vproj" aria-hidden="true" data-anim>
+          {crosses.map((cr) => (
+            <svg class:list={['cross', cr.cls]} style={`left:${cr.x}px;top:${cr.y}px`} viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><path d="M7 0v14M0 7h14" /></svg>
+          ))}
+          <svg class="cross cross--m" style="left:51px;top:395px;width:12px;height:12px" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><path d="M7 0v14M0 7h14" /></svg>
+
+          <div class="card-ui proj" data-parallax="-0.03">
+            <div>
+              <div class="proj__top"><span>{c.kicker}</span><span class="status status--mint">{c.status}</span></div>
+              <div class="proj__title">{c.title}</div>
+              <div class="proj__meta"><span class="d-only">{c.meta}</span><span class="m-only">{c.metaMobile}</span></div>
+            </div>
+            <div class="proj__stats">
+              {c.stats.map((st) => (
+                <div>
+                  <div class="proj__stat-l">{st.label}</div>
+                  <div class="proj__stat-v"><span class="d-only">{st.value}</span><span class="m-only">{st.valueMobile}</span></div>
+                </div>
+              ))}
+              <div>
+                <div class="proj__stat-l">{c.marginLabel}</div>
+                <div><span class="proj__margin">{c.margin}</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="hours__title">{c.hoursTitle}</div>
+              <div class="hours">
+                {c.hours.map((h) => (
+                  <div class="hours__row">
+                    <span class="hours__role"><span class="d-only">{h.role}</span><span class="m-only">{h.roleMobile}</span></span>
+                    <div class="hours__bar"><i style={`--w:${h.pct}%`}></i></div>
+                    <span class="hours__val">{h.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div class="card-ui ts float" data-parallax="0.05">
+            <div class="ts__head"><span>{t.title}</span><span class="tag tag--mint">{t.badge}</span></div>
+            <div class="ts__value">{t.value}</div>
+            <div class="bar"><i style={`--w:${t.progress}%`}></i></div>
+            <div class="ts__meta">{t.meta}</div>
+            <div class="ts__btn">{t.action}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

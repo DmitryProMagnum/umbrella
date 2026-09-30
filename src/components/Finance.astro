@@ -1,0 +1,65 @@
+---
+import { Picture } from 'astro:assets';
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import SplitText from './SplitText.astro';
+import loop from '../assets/img/loop.jpg';
+
+const s = home.finance;
+const c = s.card;
+---
+<section class="section bg-light on-light" id="finance" aria-labelledby="finance-title">
+  <div class="container split">
+    <SplitText id="finance" label={s.label} title={s.title} lead={s.lead} points={s.points} more={s.more} />
+
+    <div class="split__visual" data-reveal>
+      <div class="fit" data-fit="760" data-fit-min="768" data-fit-max="1.25">
+        <div class="fit__canvas vcanvas vfin">
+          <div class="vfin__img" data-parallax="0.06">
+            <Picture src={loop} widths={[320, 480, 720, 960]} sizes="(min-width: 768px) 480px, 86vw" formats={['avif', 'webp']} alt="" loading="lazy" />
+          </div>
+
+          <div class="card-ui float float--slow" aria-hidden="true" data-anim>
+            <div class="req__head">
+              <div>
+                <div class="req__title"><span class="d-only">{c.title}</span><span class="m-only">{c.titleMobile}</span></div>
+                <div class="req__meta"><span class="d-only">{c.meta}</span><span class="m-only">{c.metaMobile}</span></div>
+              </div>
+              <span class="status status--wait">{c.status}</span>
+            </div>
+            <div class="req__fields">
+              {c.fields.map((f) => (
+                <div class:list={{ 'd-only': !f.mobile }}>
+                  <div class="field-ui__l">{f.label}</div>
+                  <div class="field-ui__v num">{f.value}</div>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div class="route__title">{c.routeTitle}</div>
+              <div class="route">
+                {c.route.map((r, i) => (
+                  <div class:list={['route__step', `route__step--${r.state}`]}>
+                    <span class="route__dot">{r.state === 'done' && <Icon name="check" size={12} stroke={3} />}</span>
+                    {i < c.route.length - 1 && <span class="route__line"></span>}
+                    <span class="route__role">{r.role}</span>
+                    {r.who && <span class="route__who">{r.who}</span>}
+                    {r.state === 'current' ? (
+                      <span class="route__wait"><span class="d-only">{r.time}</span><span class="m-only">{r.timeMobile}</span></span>
+                    ) : (
+                      r.time && <span class="route__time">{r.time}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="req__actions">
+              <div class="req__btn req__btn--primary">{c.approve}</div>
+              <div class="req__btn">{c.reject}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

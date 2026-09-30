@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+compare-out/
+widths-out/
+fold-out/
+interact-out/

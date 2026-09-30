@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  lead: string;
+  points: string[];
+  more: { label: string; href: string };
+}
+const { id, label, title, lead, points, more } = Astro.props;
+---
+<div class="split__text">
+  <div class="eyebrow" data-reveal>{label}</div>
+  <h2 class="h2" id={`${id}-title`} data-reveal><Lines text={title} /></h2>
+  <p class="lead" data-reveal style="--i:1">{lead}</p>
+  <ul class="checklist">
+    {points.map((pt, i) => (
+      <li data-reveal style={`--i:${i + 1}`}>
+        <span class="checklist__mark"><Icon name="check" size={14} stroke={2.4} /></span>
+        <span>{pt}</span>
+      </li>
+    ))}
+  </ul>
+  <a class="link-more" href={more.href} data-reveal>{more.label}<Icon name="arrow" size={16} stroke={1.8} /></a>
+</div>

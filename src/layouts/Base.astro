@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import { home } from '../content/home';
+import { analytics } from '../lib/analytics';
+
+interface Props {
+  /** картинки первого экрана для предзагрузки (media — чтобы телефон не качал десктопную) */
+  preloadImages?: { href: string; media?: string; type?: string }[];
+  ogImage?: string;
+}
+const { preloadImages = [], ogImage } = Astro.props;
+const { meta } = home;
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://umbrellacorp.ai';
+const canonical = new URL(Astro.url.pathname, site).toString();
+const ogImageAbs = ogImage ? new URL(ogImage, site).toString() : undefined;
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Umbrellacorp',
+    url: site,
+    logo: `${site}/favicon.svg`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Umbrella AI',
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'ERP',
+    operatingSystem: 'Web',
+    url: site,
+    description: meta.description,
+    inLanguage: 'ru',
+    publisher: { '@type': 'Organization', name: 'Umbrellacorp' },
+  },
+];
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#000000" />
+    {analytics.ymId && <meta name="ym-id" content={analytics.ymId} />}
+    <meta name="color-scheme" content="dark light" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/inter-tight-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    {preloadImages.map((im) => (
+      <link rel="preload" as="image" href={im.href} media={im.media} type={im.type} fetchpriority="high" />
+    ))}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content={meta.siteName} />
+    <meta property="og:title" content={meta.ogTitle} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:url" content={canonical} />
+    {ogImageAbs && <meta property="og:image" content={ogImageAbs} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+    <!-- класс .js включает анимации появления; без JS контент виден сразу -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    {analytics.ymId && (
+      <script is:inline define:vars={{ id: analytics.ymId }}>
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+        ym(id,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false});
+      </script>
+    )}
+    {analytics.gaId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${analytics.gaId}`} />}
+    {analytics.gaId && (
+      <script is:inline define:vars={{ id: analytics.gaId }}>
+        window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config',id);
+      </script>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+    <slot />
+  </body>
+</html>

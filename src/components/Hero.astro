@@ -1,0 +1,129 @@
+---
+import { Picture } from 'astro:assets';
+import { home } from '../content/home';
+import { isPlaceholder } from '../lib/typo';
+import Icon from './Icon.astro';
+import Mark from './Mark.astro';
+import Portal from './Portal.astro';
+import silkHires from '../assets/img/silk-hires.jpg';
+
+const h = home.hero;
+const p = home.portal;
+const silkWidths = [800, 1200, 1600, 2000, 2720];
+const silkSizes = '(min-width: 1440px) 1360px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)';
+const queueMobile = p.queue.filter((q) => q.titleMobile).slice(0, 4);
+---
+<section class="hero bg-black" id="product" aria-labelledby="hero-title">
+  <!-- первый экран: видеофон (декоративный) + главный блок -->
+  <div class="hero__first">
+    <div class="hero__video" aria-hidden="true">
+      <video
+        class="hero__video-el"
+        muted
+        loop
+        playsinline
+        preload="none"
+        disablepictureinpicture
+        disableremoteplayback
+        tabindex="-1"
+        data-hero-video
+        data-src-desktop="/video/hero-desktop.mp4"
+        data-src-mobile="/video/hero-mobile.mp4"
+        data-parallax="0.15"
+      ></video>
+      <div class="hero__shade"></div>
+    </div>
+    <div class="container">
+      <div class="hero__intro">
+        <div class="pill-badge hero-anim" style="--d:80">
+          <Mark size={22} />
+          <span class="d-only">{h.badge}</span><span class="m-only">{h.badgeMobile}</span>
+        </div>
+        <h1 class="h1" id="hero-title">
+          <span class="h1-line"><span style="--d:160"><span class="mint">{h.titleAccent}</span>{' '}—</span></span><br />
+          {h.titleLines.map((line, i) => (
+            <Fragment>
+              <span class="h1-line"><span style={`--d:${260 + i * 100}`}>{line}</span></span>
+              {i < h.titleLines.length - 1 && <br />}
+            </Fragment>
+          ))}
+        </h1>
+        <div class="hero__row">
+          <p class="hero__lead hero-anim" style="--d:520">{h.lead}</p>
+          <div class="hero__ctas hero-anim" style="--d:620">
+            <a class="btn btn--primary btn--lg" href="#demo" data-goal="demo_click">{h.ctaPrimary}</a>
+            <a class="btn btn--ghost btn--lg" href="#how">{h.ctaSecondary}<Icon name="arrow" size={18} stroke={1.8} /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- сцена desktop/tablet: масштабируется целиком -->
+    <div class="stage-wrap d-only" data-anim>
+      <div class="fit" data-fit="1360">
+        <div class="fit__canvas stage stage-anim">
+          <div class="stage__panel">
+            <Picture
+              src={silkHires}
+              widths={silkWidths}
+              sizes={silkSizes}
+              formats={['avif', 'webp']}
+              alt=""
+              loading="lazy"
+              data-parallax="0.12"
+            />
+          </div>
+          <div class="stage__window" data-tilt>
+            <Portal />
+          </div>
+          <div class="stage__toast toast-anim" aria-hidden="true">
+            <div class="toast float">
+              <div class="toast__icon"><Icon name="check" size={18} stroke={2} /></div>
+              <div>
+                <div class="toast__title">{h.toast.title}</div>
+                <div class="toast__meta">{h.toast.meta}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- сцена mobile: карточка «Ждут вашего решения» -->
+    <div class="stage-wrap m-only" data-anim>
+      <div class="stage-m stage-anim">
+        <div class="stage-m__panel">
+          <Picture src={silkHires} widths={silkWidths} sizes={silkSizes} formats={['avif', 'webp']} alt="" loading="lazy" data-parallax="0.12" class="stage-m__img" />
+        </div>
+        <div class="queue-m" aria-hidden="true">
+          <div class="queue-m__head"><div class="queue__title">{p.queueTitle}</div><span class="queue-m__count">{p.queueMobileCount}</span></div>
+          {queueMobile.map((r) => (
+            <div class="qrow">
+              <div class="qrow__icon"><Icon name={r.icon} size={16} stroke={1.7} /></div>
+              <div class="qrow__text"><div class="qrow__title">{r.titleMobile}</div><div class="qrow__meta">{r.metaMobile}</div></div>
+              <div class:list={['qrow__sum', { 'qrow__sum--empty': !r.sum }]}>{r.sum || '—'}</div>
+            </div>
+          ))}
+          <div class="queue-m__foot"><div class="queue-m__btn">{p.queueMobileAll}</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof">
+      <div data-reveal>
+        <div class="proof__label">{h.proof.label}</div>
+        <p class="proof__text">{h.proof.text}</p>
+      </div>
+      <div class="proof__metrics">
+        {h.proof.metrics.map((m, i) => (
+          <div class="metric" data-reveal style={`--i:${i + 1}`}>
+            <span class:list={['metric__value', { ph: isPlaceholder(m.value) }]}>{m.value}</span>
+            <span class="metric__label">{m.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

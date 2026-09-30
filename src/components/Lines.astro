@@ -1,0 +1,11 @@
+---
+/**
+ * Заголовок с переносами «\n».
+ * По умолчанию переносы работают на всех ширинах (как в эталонах);
+ * desktopOnly — только на ≥768 (на mobile строки переносятся сами).
+ */
+interface Props { text: string; desktopOnly?: boolean }
+const { text, desktopOnly = false } = Astro.props;
+const lines = text.split('\n');
+---
+{lines.map((l, i) => (<Fragment>{i > 0 && <br class={desktopOnly ? 'br-d' : undefined} />}{i > 0 && ' '}{l}</Fragment>))}

@@ -1,0 +1,95 @@
+---
+/** Окно портала — иллюстрация (aria-hidden, без фокусируемых элементов). */
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import logoLight from '../assets/logo/umbrellacorp-logo-on-light.svg';
+
+const p = home.portal;
+const w = p.widgets;
+---
+<div class="portal" aria-hidden="true">
+  <div class="portal__bar">
+    <img src={logoLight.src} width="171" height="18" alt="" />
+    <div class="portal__sep"></div>
+    <div class="portal__section">{p.section}</div>
+    <div class="portal__search"><Icon name="search" size={16} stroke={1.8} /><span>{p.search}</span></div>
+    <div class="portal__status"><span class="dot dot--live"></span>{p.status}</div>
+    <div class="portal__bell"><Icon name="bell" size={20} /><span class="portal__bell-count">{p.bell}</span></div>
+    <div class="portal__avatar">{p.avatar}</div>
+  </div>
+
+  <div class="portal__body">
+    <div class="portal__side">
+      {p.sidebar.map((it) => (
+        <div class:list={['portal__nav', { 'is-active': it.active }]}>
+          <Icon name={it.icon} size={18} />{it.label}
+          {it.count && <span class="portal__nav-count">{it.count}</span>}
+          {it.badge && <span class="portal__nav-badge">{it.badge}</span>}
+        </div>
+      ))}
+      <div class="portal__side-title">{p.modulesTitle}</div>
+      {p.modules.map((it) => (
+        <div class="portal__nav"><Icon name={it.icon} size={18} />{it.label}</div>
+      ))}
+    </div>
+
+    <div class="portal__main">
+      <div class="portal__hello">
+        <div>
+          <div class="portal__hello-title">{p.greeting}</div>
+          <div class="portal__hello-meta">{p.greetingMeta}</div>
+        </div>
+        <div class="portal__new"><Icon name="plus" size={16} stroke={1.8} />{p.newRequest}</div>
+      </div>
+
+      <div class="portal__widgets" data-anim>
+        <div class="widget">
+          <div class="widget__head"><span>{w.timesheet.title}</span><span class="tag tag--mint">{w.timesheet.badge}</span></div>
+          <div class="widget__value">{w.timesheet.value}</div>
+          <div>
+            <div class="bar"><i style={`--w:${w.timesheet.progress}%`}></i></div>
+            <div class="widget__meta" style="margin-top:6px">{w.timesheet.meta}</div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget__head">{w.tasks.title}</div>
+          <div class="widget__value">{w.tasks.value}</div>
+          <div class="widget__meta">{w.tasks.meta}</div>
+        </div>
+        <div class="widget">
+          <div class="widget__head"><span>{w.approvals.title}</span><span class="tag tag--black">{w.approvals.badge}</span></div>
+          <div class="widget__value">{w.approvals.value}</div>
+          <div class="widget__meta">{w.approvals.meta}</div>
+        </div>
+        <div class="widget">
+          <div class="widget__head">{w.hr.title}</div>
+          <div class="widget__value">{w.hr.value}</div>
+          <div class="widget__meta">{w.hr.meta}</div>
+        </div>
+      </div>
+
+      <div class="portal__lower">
+        <div class="panel-ui queue">
+          <div class="queue__head"><div class="queue__title">{p.queueTitle}</div><div class="queue__all">{p.queueAll}</div></div>
+          {p.queue.map((r) => (
+            <div class="qrow">
+              <div class="qrow__icon"><Icon name={r.icon} size={16} stroke={1.7} /></div>
+              <div class="qrow__text"><div class="qrow__title">{r.title}</div><div class="qrow__meta">{r.meta}</div></div>
+              <div class:list={['qrow__sum', { 'qrow__sum--empty': !r.sum }]}>{r.sum || '—'}</div>
+              <div class:list={['qrow__btn', { 'qrow__btn--primary': r.primary }]}>{r.action}</div>
+            </div>
+          ))}
+        </div>
+        <div class="panel-ui today">
+          <div class="today__head"><div class="queue__title">{p.todayTitle}</div><span>{p.todayDate}</span></div>
+          {p.today.map((e) => (
+            <div class="today__item">
+              <span class:list={['dot', { 'dot--black': !e.mint }]}></span>
+              <div><div class="today__time">{e.time}</div><div class="today__title">{e.title}</div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

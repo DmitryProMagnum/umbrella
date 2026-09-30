@@ -1,0 +1,29 @@
+{
+  "name": "umbrellacorp-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "qa:compare": "node scripts/compare.mjs compare-out",
+    "qa:widths": "node scripts/widths.mjs widths-out",
+    "qa:fold": "node scripts/fold.mjs fold-out",
+    "qa:interact": "node scripts/interact.mjs interact-out",
+    "qa:axe": "node scripts/axe.mjs http://localhost:4322/",
+    "qa:lighthouse": "node scripts/lighthouse.mjs http://localhost:4322/"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter-tight": "^5.3.0",
+    "astro": "^7.3.5",
+    "sharp": "^0.35.5"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "cloudflared": "^0.7.3",
+    "lighthouse": "^12.8.2",
+    "playwright": "^1.63.0"
+  }
+}

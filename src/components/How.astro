@@ -1,0 +1,61 @@
+---
+import { home } from '../content/home';
+import Lines from './Lines.astro';
+import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
+
+const s = home.how;
+// координаты узлов по эталону (канвас 1360×560)
+const pos: Record<string, { h: string; ul: string }> = {
+  finance: { h: 'left:348px;top:14px;width:300px;text-align:right', ul: 'left:712px;top:0;width:300px' },
+  process: { h: 'left:0;top:258px;width:180px', ul: 'left:190px;top:244px;width:226px' },
+  people: { h: 'left:960px;top:258px;width:130px', ul: 'left:1100px;top:244px;width:260px' },
+  data: { h: 'left:348px;top:502px;width:300px;text-align:right', ul: 'left:712px;top:488px;width:300px' },
+};
+---
+<section class="section bg-black" id="how" aria-labelledby="how-title">
+  <div class="container">
+    <div class="sec-head" style="margin-bottom:clamp(40px, 26px + 3.6vw, 80px)">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="how-title"><Lines text={s.title} /></h2>
+      </div>
+      <p class="lead" data-reveal style="--i:1">{s.lead}</p>
+    </div>
+
+    <!-- desktop: знак X и четыре потока -->
+    <div class="flows-d">
+      <div class="fit" data-fit="1360">
+        <div class="fit__canvas flows" data-anim data-anim-once>
+          <div class="flows__glow" aria-hidden="true"></div>
+          <div class="flows__x" aria-hidden="true"><img src={xMint.src} width="220" height="180" alt="" data-parallax="-0.04" /></div>
+
+          <div class="fline fline--v fline--top" style="left:680px;top:96px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--v fline--bottom" style="left:680px;top:388px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--h fline--left" style="left:426px;top:280px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--h fline--right" style="left:814px;top:280px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+
+          {s.flows.map((f) => (
+            <Fragment>
+              <h3 style={pos[f.id].h}>{f.title}</h3>
+              <ul style={pos[f.id].ul}>
+                {f.items.map((it) => <li>— {it}</li>)}
+              </ul>
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile / tablet: 2×2 с X на пересечении -->
+    <div class="flows-m" data-reveal>
+      <div class="flows-m__glow" aria-hidden="true"></div>
+      {s.flows.map((f) => (
+        <div class="flows-m__card">
+          <h3>{f.title}</h3>
+          <ul>{f.short.map((it) => <li>— {it}</li>)}</ul>
+        </div>
+      ))}
+      <div class="flows-m__x" aria-hidden="true"><img src={xMint.src} width="72" height="59" alt="" /></div>
+    </div>
+  </div>
+</section>

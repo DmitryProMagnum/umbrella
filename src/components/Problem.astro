@@ -1,0 +1,31 @@
+---
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+
+const s = home.problem;
+---
+<section class="section bg-light on-light" aria-labelledby="problem-title">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="problem-title"><Lines text={s.title} desktopOnly /></h2>
+      </div>
+    </div>
+    <div class="problem-grid">
+      {s.cards.map((c, i) => (
+        <article class="pcard" data-reveal style={`--i:${i}`}>
+          <div class="pcard__top">
+            <span class="pcard__num">{String(i + 1).padStart(2, '0')}</span>
+            <Icon name={c.icon} size={26} stroke={1.5} />
+          </div>
+          <div class="pcard__body">
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

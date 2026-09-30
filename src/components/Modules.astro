@@ -1,0 +1,71 @@
+---
+import { home } from '../content/home';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+
+const s = home.modules;
+---
+<section class="section bg-white on-light" id="modules" aria-labelledby="modules-title">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="modules-title"><Lines text={s.title} /></h2>
+      </div>
+      <p class="lead" data-reveal style="--i:1">{s.lead}</p>
+    </div>
+
+    <!-- ≥768: сетка карточек -->
+    <div class="mod-grid">
+      {s.items.map((m, i) => (
+        <article class="mcard" data-reveal style={`--i:${i % 3}`}>
+          <div class="mcard__head">
+            <span class="icon-box"><Icon name={m.icon} size={22} /></span>
+            <h3>{m.title}</h3>
+          </div>
+          <p class="mcard__text">{m.text}</p>
+          <ul class="chips" aria-label={`Модули: ${m.title}`}>
+            {m.chips.map((c) => (
+              <li class:list={['chip', { 'chip--soon': c.soon }]}>
+                {c.label}{c.soon && <span class="chip__soon">{s.soonLabel}</span>}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <!-- <768: аккордеон, открыт один пункт -->
+    <div class="mod-acc" data-accordion>
+      {s.items.map((m, i) => (
+        <div class:list={['acc', { 'is-open': i === 0 }]}>
+          <h3>
+            <button type="button" class="acc__btn" id={`acc-btn-${i}`} aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`acc-panel-${i}`}>
+              <span class="icon-box"><Icon name={m.icon} size={20} /></span>
+              <span class="acc__titles">
+                <span class="acc__title">{m.title}</span>
+                {m.short && <span class="acc__short">{m.short}</span>}
+              </span>
+              <Icon name="chevron" size={22} stroke={1.7} class="acc__chev" />
+            </button>
+          </h3>
+          <div class="acc__panel" id={`acc-panel-${i}`} role="region" aria-labelledby={`acc-btn-${i}`} inert={i !== 0}>
+            <div class="acc__inner">
+              <div class="acc__content">
+                <p>{m.text}</p>
+                <ul class="chips">
+                  {m.chips.map((c) => (
+                    <li class:list={['chip', { 'chip--soon': c.soon }]}>
+                      {c.label}{c.soon && <span class="chip__soon">{s.soonLabel}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a class="link-more mod-all" href={s.allLink.href}>{s.allLink.label}<Icon name="arrow" size={16} stroke={1.8} /></a>
+  </div>
+</section>
