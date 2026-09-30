@@ -22,8 +22,10 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
-    "cloudflared": "^0.7.3",
     "lighthouse": "^12.8.2",
     "playwright": "^1.63.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
