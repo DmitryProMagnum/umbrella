@@ -9,14 +9,13 @@ const SHORT = [
   'в', 'и', 'а', 'с', 'к', 'о', 'у', 'по', 'на', 'до', 'из', 'не',
   'за', 'от', 'для', 'без', 'при', 'но', 'во', 'со', 'об', 'что',
 ];
-const shortRe = new RegExp(`(^|[\\s${NBSP}«(„"—])(${SHORT.join('|')})\\s+`, 'giu');
+// lookbehind не «съедает» символ перед словом, поэтому цепочки («а не для») связываются за один проход
+const shortRe = new RegExp(`(?<=^|[\\s${NBSP}«(„"—])(${SHORT.join('|')})\\s+`, 'giu');
 
 export function typo(input: string): string {
   if (!input || input.startsWith('#') || input.startsWith('/') || input.startsWith('http')) return input;
   let s = input;
-  // дважды — чтобы поймать цепочки вроде «и в»
-  s = s.replace(shortRe, (_m, pre, word) => `${pre}${word}${NBSP}`);
-  s = s.replace(shortRe, (_m, pre, word) => `${pre}${word}${NBSP}`);
+  s = s.replace(shortRe, (_m, word) => `${word}${NBSP}`);
   s = s.replace(/ +—/g, `${NBSP}—`);
   s = s.replace(/(\d) (?=\d{3}\b)/g, `$1${NBSP}`);
   s = s.replace(/(\d) (?=\d{3}\b)/g, `$1${NBSP}`);

@@ -38,7 +38,7 @@ const pos: Record<string, { h: string; ul: string }> = {
             <Fragment>
               <h3 style={pos[f.id].h}>{f.title}</h3>
               <ul style={pos[f.id].ul}>
-                {f.items.map((it) => <li>— {it}</li>)}
+                {f.items.map((it) => <li>—&nbsp;{it}</li>)}
               </ul>
             </Fragment>
           ))}
@@ -52,7 +52,7 @@ const pos: Record<string, { h: string; ul: string }> = {
       {s.flows.map((f) => (
         <div class="flows-m__card">
           <h3>{f.title}</h3>
-          <ul>{f.short.map((it) => <li>— {it}</li>)}</ul>
+          <ul>{f.short.map((it) => <li>—&nbsp;{it}</li>)}</ul>
         </div>
       ))}
       <div class="flows-m__x" aria-hidden="true"><img src={xMint.src} width="72" height="59" alt="" /></div>

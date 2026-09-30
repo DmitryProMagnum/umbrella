@@ -94,19 +94,21 @@ document.querySelectorAll<HTMLElement>('[data-accordion]').forEach((root) => {
     const btn = item.querySelector<HTMLButtonElement>('.acc__btn')!;
     btn.addEventListener('click', () => {
       const willOpen = btn.getAttribute('aria-expanded') !== 'true';
+      const topBefore = btn.getBoundingClientRect().top;
       items.forEach((it) => {
         const open = it === item && willOpen;
+        const panel = it.querySelector<HTMLElement>('.acc__panel')!;
+        // пункт выше нажатого закрываем без анимации (панель, заголовок) — иначе страница уезжает из-под пальца
+        const above = item.compareDocumentPosition(it) & Node.DOCUMENT_POSITION_PRECEDING;
+        if (!open && it.classList.contains('is-open') && above) it.classList.add('acc--instant');
         it.classList.toggle('is-open', open);
         it.querySelector('.acc__btn')!.setAttribute('aria-expanded', String(open));
-        (it.querySelector('.acc__panel') as HTMLElement).inert = !open;
+        panel.inert = !open;
       });
-      if (willOpen && !reduceMotion.matches) {
-        // после раскрытия — мягко довести пункт до видимой области
-        setTimeout(() => {
-          const r = item.getBoundingClientRect();
-          if (r.top < 72) window.scrollBy({ top: r.top - 80, behavior: 'smooth' });
-        }, 360);
-      }
+      // нажатый заголовок остаётся на месте
+      const shift = btn.getBoundingClientRect().top - topBefore;
+      if (Math.abs(shift) > 1) window.scrollBy({ top: shift, behavior: 'instant' });
+      requestAnimationFrame(() => items.forEach((it) => it.classList.remove('acc--instant')));
     });
   });
 });

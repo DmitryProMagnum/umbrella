@@ -1582,7 +1582,7 @@ select.input {
     animation-delay: calc(var(--d, 0) * 1ms);
   }
   @keyframes heroIn { to { opacity: 1; transform: none; } }
-  .js .h1-line { display: inline-block; overflow: clip; vertical-align: top; padding-bottom: .06em; margin-bottom: -.06em; }
+  .js .h1-line { display: inline-block; overflow: clip; vertical-align: top; padding: 0 .06em .1em 0; margin: 0 -.06em -.1em 0; }
   .js .h1-line > span {
     display: inline-block;
     transform: translate3d(0, 105%, 0);
@@ -1675,7 +1675,7 @@ select.input {
 .stage-m__panel picture { position: absolute; inset: -12% 0; }
 .stage-m__panel img { width: 100%; height: 100%; object-fit: cover; }
 
-.acc h3 { font: inherit; }
+.acc h3 { font: inherit; border-radius: inherit; }
 
 /* UI-иллюстрации: интерлиньяж как в эталоне (normal) */
 .portal, .card-ui, .queue-m, .toast { line-height: normal; }
@@ -1850,4 +1850,58 @@ select.input {
   }
   /* на телефоне первый экран — тоже только главный блок */
   .hero__intro { min-height: calc(100svh - var(--header-h)); justify-content: center; padding-bottom: 40px; }
+}
+
+/* ==========================================================================
+   Мобильная доводка (аудит 320–430 px)
+   ========================================================================== */
+.pcard h3 { text-wrap: balance; }
+.pill-badge svg { flex-shrink: 0; }
+.acc__titles { line-height: 1.25; }
+.acc--instant, .acc--instant * { transition: none !important; }
+.acc__content { padding: 0 18px 20px; }
+.acc__content .chip { height: auto; min-height: 30px; padding-block: 3px; line-height: 1.25; }
+.mod-all { margin-top: 8px; padding-top: 16px; } /* зона нажатия 44px, текст на прежнем месте */
+.site-header__logo, .mnav__top > a { display: flex; align-items: center; min-height: 44px; }
+
+/* меню: шапка с крестиком не уезжает, на невысоких экранах всё помещается */
+.mnav { overscroll-behavior: contain; }
+.mnav__top {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--c1);
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+}
+@media (max-height: 740px) {
+  .mnav__list { margin-top: 8px; }
+  .mnav__list a { padding-block: 12px; font-size: 22px; line-height: 1.2; }
+  .mnav__bottom { padding-top: 20px; }
+}
+
+/* на тач-экранах hover не «залипает» после тапа по неинтерактивным карточкам */
+@media (hover: none) {
+  .pcard:hover { transform: none; box-shadow: none; }
+  .pcard:hover .icon, .mcard:hover .icon-box, .role:hover .icon-box { transform: none; }
+  .mcard:hover, .role:hover { background: var(--c1-5); }
+}
+
+@media (max-width: 767.98px) {
+  .lead { line-height: 1.5; }
+  .pcard__top .icon { width: 22px; height: 22px; }
+  .pill-badge svg { width: 20px; height: 20px; }
+  /* H1 всегда в 4 строки, как в эталоне: на 320–350 чуть меньше 35px */
+  .hero .h1 { font-size: min(var(--fs-h1), calc((100vw - 40px) / 9)); }
+  /* параллакс на телефоне выключен — запас под него не нужен, кадр как в эталоне */
+  .stage-m__panel picture { inset: 0; }
+  @media (hover: none) { .role:hover { background: transparent; } }
+}
+@media (max-width: 374.98px) {
+  .acc__btn { padding-inline: 16px; gap: 10px; }
+  .acc__content { padding-inline: 16px; }
+}
+@media (max-width: 359.98px) {
+  .pill-badge { font-size: 11px; gap: 6px; padding-right: 10px; }
+  .flows-m { column-gap: 32px; }
+  .flows-m__card { padding: 12px; }
+  .queue-m .qrow__icon { display: none; }
 }
