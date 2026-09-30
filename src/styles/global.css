@@ -1702,7 +1702,7 @@ select.input {
   }
   .hero .h1 {
     margin-top: clamp(16px, 3.5vh, 32px);
-    font-size: min(var(--fs-h1), max(48px, 10.2vh));
+    font-size: min(var(--fs-h1), max(36px, 10.2vh));
   }
   .hero__row { margin-top: clamp(20px, 4.4vh, 40px); }
   .hero__lead { font-size: min(var(--fs-lead-hero), max(16px, 2.25vh)); }
@@ -1938,4 +1938,17 @@ select.input {
   .donut__center b { font-size: 16px; }
   .legend { font-size: 11px; gap: 8px; }
   .legend__row { gap: 6px; }
+}
+
+/* — невысокие экраны (телефон в горизонтальной ориентации): главный блок компактнее — */
+@media (min-width: 768px) {
+  .hero__row { gap: clamp(16px, 3vh, 28px); }
+}
+@media (max-width: 767.98px) and (orientation: landscape) and (max-height: 500px) {
+  .hero__intro { padding-top: 16px; padding-bottom: 24px; }
+  .hero .h1 { margin-top: 16px; font-size: min(var(--fs-h1), calc((100vw - 40px) / 9), max(30px, 10.2vh)); }
+  .hero__row { margin-top: 16px; gap: 16px; }
+  .hero__lead { font-size: 16px; }
+  .hero__ctas { flex-direction: row; }
+  .hero__ctas .btn { width: auto; }
 }
