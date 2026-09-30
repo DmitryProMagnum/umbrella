@@ -30,9 +30,9 @@ const f = s.feature;
             <path d="M0 118 C 60 118, 60 40, 120 40" /><path d="M0 118 C 60 118, 60 92, 120 92" />
             <path d="M0 118 C 60 118, 60 144, 120 144" /><path d="M0 118 C 60 118, 60 196, 120 196" />
           </svg>
-          <svg class="tree__lines m-only" viewBox="0 0 80 196" width="80" height="196" fill="none" stroke="#4D4D4D" stroke-width="1.2" stroke-dasharray="4 4">
-            <path d="M0 98 C 40 98, 40 20, 80 20" /><path d="M0 98 C 40 98, 40 72, 80 72" />
-            <path d="M0 98 C 40 98, 40 124, 80 124" /><path d="M0 98 C 40 98, 40 176, 80 176" />
+          <svg class="tree__lines m-only" viewBox="0 0 80 196" width="80" height="196" preserveAspectRatio="none" fill="none" stroke="#4D4D4D" stroke-width="1.2" stroke-dasharray="4 4">
+            <path d="M0 98 C 40 98, 40 20, 80 20" vector-effect="non-scaling-stroke" /><path d="M0 98 C 40 98, 40 72, 80 72" vector-effect="non-scaling-stroke" />
+            <path d="M0 98 C 40 98, 40 124, 80 124" vector-effect="non-scaling-stroke" /><path d="M0 98 C 40 98, 40 176, 80 176" vector-effect="non-scaling-stroke" />
           </svg>
           {f.companies.map((co) => <div class="tree__node">{co}</div>)}
           <div class="tree__node tree__node--more">{f.more}</div>

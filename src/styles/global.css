@@ -1905,3 +1905,37 @@ select.input {
   .flows-m__card { padding: 12px; }
   .queue-m .qrow__icon { display: none; }
 }
+
+/* — узкие экраны: карточки-иллюстрации, форма, подвал (аудит, раунд 2) — */
+.route__role, .legend__v { white-space: nowrap; }
+@media (max-width: 767.98px) {
+  .input { font-size: 16px; } /* иначе iOS увеличивает страницу при фокусе на поле */
+  /* зона нажатия ссылок подвала ≥ 24px без изменения ритма списка */
+  .fcol a, .footer__legal a { padding-block: 4px; margin-block: -4px; }
+}
+@media (max-width: 374.98px) {
+  .req__head { flex-wrap: wrap; row-gap: 8px; }
+  .field-ui__v { white-space: normal; }
+  .demo__inner { padding: 20px 16px; }
+  .form { padding: 16px; }
+  .fcol { font-size: 14px; }
+  .footer__nav { column-gap: 16px; }
+  /* схема юрлиц сжимается по ширине, чтобы плашки не обрезались карточкой */
+  .bento__feature { padding: 20px; }
+  .tree__mark { width: 44px; height: 44px; top: 76px; }
+  .tree__lines { left: 44px; width: 56px; }
+  .tree__node { left: 100px; font-size: 11px; padding: 0 10px; gap: 6px; }
+}
+@media (max-width: 359.98px) {
+  .route__who { display: none; }
+  .vfin { padding-inline: 12px; }
+  .vfin .card-ui { padding: 16px; }
+  .proj__stats { grid-template-columns: 1fr 1fr; }
+  .vproj .ts { max-width: 84%; }
+  .vpeople .report { margin-inline: 12px; padding: 14px; }
+  .report__donut-row { gap: 12px; }
+  .donut { width: 76px; height: 76px; }
+  .donut__center b { font-size: 16px; }
+  .legend { font-size: 11px; gap: 8px; }
+  .legend__row { gap: 6px; }
+}
