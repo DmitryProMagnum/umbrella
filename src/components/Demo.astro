@@ -54,7 +54,7 @@ const endpoint = '';
             <div class="ffield">
               <label for="d-size">{f.size.label}</label>
               <select class="input" id="d-size" name="size">
-                {f.size.options.map((o, i) => <option selected={i === 0}>{o}</option>)}
+                {f.size.options.map((o) => <option selected={o === f.size.default}>{o}</option>)}
               </select>
             </div>
           </div>
