@@ -382,8 +382,9 @@ const content = {
 
   demo: {
     label: 'Демо Umbrellacorp',
-    slogan: ['Connect.', 'Control. Move.'],
-    sloganMobile: ['Connect.', 'Control.', 'Move.'],
+    // слоган переведён по решению заказчика (в брифе был англ. «Connect. Control. Move.»)
+    slogan: ['Связь. Контроль.', 'Движение.'],
+    sloganMobile: ['Связь.', 'Контроль.', 'Движение.'],
     text: 'Покажем Umbrellacorp на примере ваших процессов и подберём модули для старта.',
     form: {
       title: 'Запросить демо',
