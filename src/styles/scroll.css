@@ -1,0 +1,184 @@
+/* ==========================================================================
+   Scroll-редизайн: движение, привязанное к прокрутке
+   animation-timeline: Chrome/Edge 115+, Safari 26+. В остальных браузерах
+   и при prefers-reduced-motion — статичная версия той же страницы.
+   ========================================================================== */
+
+/* индикатор прокрутки */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 70;
+  height: 3px; background: var(--c2);
+  transform: scaleX(0); transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+/* бегущие строки с модулями под сценой */
+.ticker {
+  margin-top: clamp(64px, 8vw, 128px);
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.ticker__row {
+  white-space: nowrap;
+  font-size: clamp(44px, 8.5vw, 140px); line-height: 1.02;
+  font-weight: 500; letter-spacing: -0.05em;
+}
+.ticker__row--1 { color: var(--c5); }
+.ticker__row--2 { color: transparent; -webkit-text-stroke: 1px var(--dash); }
+.ticker + .proof { margin-top: clamp(48px, 6vw, 96px); }
+
+/* «Проблема»: карточки складываются стопкой (≥768) */
+@media (min-width: 768px) {
+  .problem-grid { display: flex; flex-direction: column; gap: 32px; padding-bottom: 24px; }
+  .pcard {
+    position: sticky;
+    top: calc(var(--header-h) + 24px + var(--i, 0) * 26px);
+    display: grid;
+    grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 40px;
+    grid-template-areas: "num body icon";
+    align-items: start; gap: 32px;
+    min-height: 280px; padding: clamp(28px, 3vw, 44px); border-radius: 32px;
+    box-shadow: 0 -16px 48px rgba(0, 0, 0, .06);
+  }
+  .pcard:hover { transform: none; }
+  .pcard__top { display: contents; }
+  .pcard__num { grid-area: num; font-size: clamp(64px, 8vw, 128px); line-height: .85; font-weight: 500; letter-spacing: -0.06em; color: var(--c4); }
+  .pcard__top .icon { grid-area: icon; justify-self: end; width: 36px; height: 36px; }
+  .pcard__body { grid-area: body; gap: 16px; }
+  .pcard h3 { font-size: clamp(24px, 2.6vw, 38px); line-height: 1.1; letter-spacing: -0.03em; }
+  .pcard p { font-size: clamp(16px, 1.3vw, 19px); max-width: 32em; }
+  .pcard:nth-child(4) { background: var(--c1); color: var(--c5); }
+  .pcard:nth-child(4) .pcard__num { color: var(--ln-3); }
+  .pcard:nth-child(4) p { color: var(--dk-3); }
+  .pcard:nth-child(4) .icon { color: var(--c2); }
+}
+
+/* модули (≥768): лента карточек; без поддержки — прокрутка вбок */
+@media (min-width: 768px) {
+  .mods-pin .sec-head { margin-bottom: clamp(32px, 4vw, 56px); }
+  .mod-grid {
+    display: flex !important; gap: 24px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding-inline: max(var(--gutter), calc((100vw - 1360px) / 2));
+    padding-bottom: 8px;
+  }
+  .mcard { flex: 0 0 clamp(300px, 30vw, 420px); scroll-snap-align: start; }
+}
+
+/* финансы (≥1200): визуал закреплён, пункты — лентой */
+@media (min-width: 1200px) {
+  #finance .split { align-items: start; }
+  #finance .split__visual { position: sticky; top: calc(var(--header-h) + 40px); }
+  #finance .checklist { gap: 0; }
+  #finance .checklist li { padding-block: 32px; border-top: 1px solid var(--c1-20); font-size: 21px; line-height: 1.35; letter-spacing: -0.01em; }
+  #finance .checklist li:last-child { border-bottom: 1px solid var(--c1-20); }
+}
+
+@property --pct { syntax: '<integer>'; inherits: false; initial-value: 35; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .scroll-progress { animation: sx-grow linear both; animation-timeline: scroll(root); }
+
+    /* первый экран: видеофон приближается, текст уходит вверх с размытием */
+    .hero__video { animation: sx-zoom linear both; animation-timeline: scroll(root); animation-range: 0px 900px; transform-origin: 50% 30%; }
+    .hero__first .hero__intro { animation: sx-hero-out linear both; animation-timeline: scroll(root); animation-range: 0px 720px; }
+
+    /* бегущие строки едут навстречу */
+    .ticker { view-timeline-name: --sx-ticker; }
+    .ticker__row--1 { animation: sx-left linear both; animation-timeline: --sx-ticker; animation-range: cover 0% cover 100%; }
+    .ticker__row--2 { animation: sx-right linear both; animation-timeline: --sx-ticker; animation-range: cover 0% cover 100%; }
+
+    /* появление блоков — по прокрутке, а не по таймеру */
+    .js [data-reveal] {
+      opacity: 1; transform: none; transition: none;
+      animation: sx-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 75%;
+    }
+
+    /* «Четыре потока»: знак вырастает, линии прорисовываются, потоки съезжаются */
+    .flows { view-timeline-name: --sx-flows; }
+    .js .flows .flows__x { opacity: 1; transform: none; transition: none; animation: sx-core linear both; animation-timeline: --sx-flows; animation-range: entry 10% cover 45%; }
+    .js .flows .fline--v { transform: none; transition: none; animation: sx-draw-y linear both; animation-timeline: --sx-flows; animation-range: cover 28% cover 48%; }
+    .js .flows .fline--h { transform: none; transition: none; animation: sx-draw-x linear both; animation-timeline: --sx-flows; animation-range: cover 28% cover 48%; }
+    .js .flows h3, .js .flows ul { transition: none; opacity: 1; animation: sx-rise linear both; animation-timeline: --sx-flows; animation-range: entry 20% cover 45%; }
+    .flows-m { view-timeline-name: --sx-flows-m; }
+    .flows-m__x { animation: sx-core linear both; animation-timeline: --sx-flows-m; animation-range: entry 20% cover 45%; }
+
+    /* модули: секция закрепляется, лента едет вбок */
+    @media (min-width: 768px) {
+      .mods { height: 2700px; padding-block: 0; view-timeline-name: --sx-mods; }
+      .mods-pin {
+        position: sticky; top: var(--header-h);
+        height: min(calc(100vh - var(--header-h)), 900px);
+        display: flex; flex-direction: column; justify-content: center;
+        overflow: hidden;
+      }
+      .mod-grid { overflow: visible; width: max-content; scroll-snap-type: none; animation: sx-track linear both; animation-timeline: --sx-mods; animation-range: contain 0% contain 100%; }
+    }
+
+    /* финансы: шаги маршрута отмечаются по мере прокрутки */
+    #finance { view-timeline-name: --sx-fin; }
+    #finance .route__step--done:nth-child(1) .route__dot { animation: sx-done linear both; animation-timeline: --sx-fin; animation-range: cover 22% cover 30%; }
+    #finance .route__step--done:nth-child(2) .route__dot { animation: sx-done linear both; animation-timeline: --sx-fin; animation-range: cover 30% cover 38%; }
+    #finance .route__step--current .route__dot { animation: sx-current linear both, ping 2s ease-out infinite; animation-timeline: --sx-fin, auto; animation-range: cover 38% cover 46%, normal; }
+    @media (min-width: 1200px) {
+      #finance .checklist li { animation: sx-focus linear both; animation-timeline: view(); animation-range: cover 5% cover 95%; }
+    }
+
+    /* проекты: маржа набегает до 35%, часы заполняются, карточка разворачивается */
+    #projects { view-timeline-name: --sx-proj; }
+    #projects .proj__margin { font-size: 0; counter-reset: sx-p var(--pct); animation: sx-count linear both; animation-timeline: --sx-proj; animation-range: entry 40% cover 50%; }
+    #projects .proj__margin::after { content: counter(sx-p) '%'; font-size: 20px; }
+    .js #projects [data-anim] .hours__bar > i { transition: none; animation: sx-fill linear both; animation-timeline: --sx-proj; animation-range: entry 45% cover 55%; }
+    @media (min-width: 768px) {
+      #projects .vcanvas { animation: sx-tilt-side linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+    }
+    @media (max-width: 767.98px) {
+      #projects .proj__margin::after { font-size: 15px; }
+    }
+
+    /* AI: портрет раскрывается шторкой, вопросы появляются по одному */
+    .ai__media { animation: sx-iris linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+    .ai__media picture { animation: sx-unzoom linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
+    .ai__examples { view-timeline-name: --sx-bub; }
+    .js [data-anim] .bubble { transition: none; opacity: 1; animation: sx-pop linear both; animation-timeline: --sx-bub; }
+    .js [data-anim] .bubble:nth-of-type(1) { animation-range: entry 0% entry 40%; }
+    .js [data-anim] .bubble:nth-of-type(2) { animation-range: entry 30% entry 70%; }
+    .js [data-anim] .bubble:nth-of-type(3) { animation-range: entry 60% entry 100%; }
+
+    /* слоган в демо: строки загораются по очереди, «Движение.» — мятным */
+    .demo { view-timeline-name: --sx-demo; }
+    .slw { color: var(--ln-4); animation: sx-word linear both; animation-timeline: --sx-demo; }
+    .slw--1 { animation-range: entry 30% entry 60%; }
+    .slw--2 { animation-range: entry 50% entry 80%; }
+    .slw--3 { animation-name: sx-word-mint; animation-range: entry 70% entry 100%; }
+    .d-only > .slw--2 { animation-name: sx-word-mint; }
+
+    /* подвал: вордмарк выезжает снизу */
+    .js .footer__word[data-reveal] { animation: sx-word-up linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+  }
+}
+
+@keyframes sx-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sx-zoom { from { transform: scale(1); } to { transform: scale(1.18); } }
+@keyframes sx-hero-out { from { opacity: 1; transform: none; filter: blur(0); } to { opacity: .1; transform: translateY(-90px) scale(.96); filter: blur(6px); } }
+@keyframes sx-left { from { transform: translateX(4%); } to { transform: translateX(-34%); } }
+@keyframes sx-right { from { transform: translateX(-34%); } to { transform: translateX(4%); } }
+@keyframes sx-rise { from { opacity: 0; transform: translateY(56px); } to { opacity: 1; transform: none; } }
+@keyframes sx-core { from { opacity: 0; transform: scale(.4) rotate(-25deg); } to { opacity: 1; transform: none; } }
+@keyframes sx-draw-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sx-draw-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes sx-track { from { transform: translateX(0); } to { transform: translateX(calc(-100% + 100vw)); } }
+@keyframes sx-done { from { background: #fff; color: transparent; box-shadow: inset 0 0 0 1.5px #D0D0D0; } to { background: #0A0A0A; color: var(--c2); box-shadow: none; } }
+@keyframes sx-current { from { background: #fff; box-shadow: inset 0 0 0 1.5px #D0D0D0; } to { background: var(--c2); } }
+@keyframes sx-focus { 0%, 100% { opacity: .35; } 30%, 70% { opacity: 1; } }
+@keyframes sx-count { from { --pct: 0; } to { --pct: 35; } }
+@keyframes sx-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes sx-tilt-side { from { transform: perspective(1400px) rotateY(-16deg) translateX(60px); opacity: .4; } to { transform: none; opacity: 1; } }
+@keyframes sx-iris { from { clip-path: inset(16% 20% 16% 20% round 200px); } to { clip-path: inset(0 round 32px); } }
+@keyframes sx-unzoom { from { transform: scale(1.25); } to { transform: scale(1); } }
+@keyframes sx-pop { from { opacity: 0; transform: translateY(24px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes sx-word { from { color: var(--ln-4); } to { color: var(--c5); } }
+@keyframes sx-word-mint { from { color: var(--ln-4); } to { color: var(--c2); } }
+@keyframes sx-word-up { from { opacity: .2; transform: translateY(50%); } to { opacity: 1; transform: none; } }

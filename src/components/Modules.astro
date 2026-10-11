@@ -5,7 +5,9 @@ import Lines from './Lines.astro';
 
 const s = home.modules;
 ---
-<section class="section bg-white on-light" id="modules" aria-labelledby="modules-title">
+<section class="section bg-white on-light mods" id="modules" aria-labelledby="modules-title">
+  <!-- ≥768: заголовок и лента карточек закрепляются, лента едет вбок при прокрутке -->
+  <div class="mods-pin">
   <div class="container">
     <div class="sec-head">
       <div class="sec-head__title" data-reveal>
@@ -14,11 +16,12 @@ const s = home.modules;
       </div>
       <p class="lead" data-reveal style="--i:1">{s.lead}</p>
     </div>
+  </div>
 
-    <!-- ≥768: сетка карточек -->
+    <!-- ≥768: лента карточек -->
     <div class="mod-grid">
       {s.items.map((m, i) => (
-        <article class="mcard" data-reveal style={`--i:${i % 3}`}>
+        <article class="mcard" style={`--i:${i}`}>
           <div class="mcard__head">
             <span class="icon-box"><Icon name={m.icon} size={22} /></span>
             <h3>{m.title}</h3>
@@ -35,6 +38,9 @@ const s = home.modules;
       ))}
     </div>
 
+  </div>
+
+  <div class="container">
     <!-- <768: аккордеон, открыт один пункт -->
     <div class="mod-acc" data-accordion>
       {s.items.map((m, i) => (

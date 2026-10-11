@@ -111,6 +111,10 @@ const queueMobile = p.queue.filter((q) => q.titleMobile).slice(0, 4);
       </div>
     </div>
 
+    <div class="ticker" aria-hidden="true">
+      {h.ticker.map((t, i) => <p class={`ticker__row ticker__row--${i + 1}`}>{t} {t}</p>)}
+    </div>
+
     <div class="proof">
       <div data-reveal>
         <div class="proof__label">{h.proof.label}</div>
