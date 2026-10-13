@@ -468,8 +468,7 @@ const content = {
     contactsTitle: 'Связаться',
     contacts: [
       { label: 'hi@4ssistance.com', href: 'mailto:hi@4ssistance.com' },
-      { label: '+7 (495) 476-35-15', href: 'tel:+74954763515' },
-      { label: 'г. Москва, 3-я ул. Ямского Поля, д. 20, стр. 1, офис 502' },
+      { label: '+7 (916) 429-38-53', href: 'tel:+79164293853' },
     ] as { label: string; href?: string }[],
     copyright: '© 2026 Umbrellacorp',
     privacy: 'Политика конфиденциальности',
