@@ -5,8 +5,7 @@ import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
 import wordmark from '../assets/logo/umbrellacorp-wordmark-white.svg';
 
 const s = home.footer;
-// контакты-плейсхолдеры [в скобках] не показываем — колонка появится с реальными данными
-const contacts = s.contacts.filter((c) => !isPlaceholder(c));
+const contacts = s.contacts.filter((c) => !isPlaceholder(c.label));
 ---
 <footer class="footer">
   <div class="container">
@@ -26,7 +25,7 @@ const contacts = s.contacts.filter((c) => !isPlaceholder(c));
         {contacts.length > 0 && (
           <div class="fcol fcol--contacts" id="contacts">
             <h2 class="fcol__t">{s.contactsTitle}</h2>
-            {contacts.map((c) => <span>{c}</span>)}
+            {contacts.map((c) => (c.href ? <a href={c.href}>{c.label}</a> : <span class="fcol__addr">{c.label}</span>))}
           </div>
         )}
       </nav>

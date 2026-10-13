@@ -353,3 +353,7 @@
   .aichat__row { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, .8fr); }
   .pcard__more { padding-block: 14px 4px; }
 }
+
+/* подвал: адрес офиса переносится аккуратно */
+.fcol__addr { max-width: 260px; line-height: 1.45; color: #E6E6E6; }
+@media (max-width: 767.98px) { .fcol__addr { padding-block: 13px; } }

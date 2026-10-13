@@ -460,13 +460,17 @@ const content = {
         title: 'Компания',
         links: [
           { label: 'Внедрение', href: '#implementation' },
+          { label: 'Контакты', href: '#contacts' },
         ],
       },
       // «О компании», «Партнёрам», «Блог», «Документация», «Тарифы» — вернуть, когда появятся страницы
     ],
     contactsTitle: 'Связаться',
-    // [от заказчика]; пока в скобках — на сайте не показываются
-    contacts: ['[email@umbrellacorp.ai]', '[+7 (000) 000-00-00]', '[город, адрес офиса]'],
+    contacts: [
+      { label: 'hi@4ssistance.com', href: 'mailto:hi@4ssistance.com' },
+      { label: '+7 (495) 476-35-15', href: 'tel:+74954763515' },
+      { label: 'г. Москва, 3-я ул. Ямского Поля, д. 20, стр. 1, офис 502' },
+    ] as { label: string; href?: string }[],
     copyright: '© 2026 Umbrellacorp',
     privacy: 'Политика конфиденциальности',
     terms: 'Пользовательское соглашение',
