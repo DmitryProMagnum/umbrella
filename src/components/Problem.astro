@@ -23,6 +23,7 @@ const s = home.problem;
           <div class="pcard__body">
             <h3>{c.title}</h3>
             <p>{c.text}</p>
+            {i === s.cards.length - 1 && <a class="pcard__more" href={s.solveLink.href}>{s.solveLink.label}<Icon name="arrow" size={16} stroke={1.8} /></a>}
           </div>
         </article>
       ))}

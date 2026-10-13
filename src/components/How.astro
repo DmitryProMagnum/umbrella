@@ -4,12 +4,12 @@ import Lines from './Lines.astro';
 import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 
 const s = home.how;
-// координаты узлов по эталону (канвас 1360×560)
+// симметричная схема: подпись снаружи, список под ней (канвас 1360×640)
 const pos: Record<string, { h: string; ul: string }> = {
-  finance: { h: 'left:348px;top:14px;width:300px;text-align:right', ul: 'left:712px;top:0;width:300px' },
-  process: { h: 'left:0;top:258px;width:180px', ul: 'left:190px;top:244px;width:226px' },
-  people: { h: 'left:960px;top:258px;width:130px', ul: 'left:1100px;top:244px;width:260px' },
-  data: { h: 'left:348px;top:502px;width:300px;text-align:right', ul: 'left:712px;top:488px;width:300px' },
+  finance: { h: 'left:430px;top:0;width:500px;text-align:center', ul: 'left:430px;top:52px;width:500px;text-align:center' },
+  process: { h: 'left:40px;top:260px;width:370px;text-align:right', ul: 'left:40px;top:312px;width:370px;text-align:right' },
+  people: { h: 'left:950px;top:260px;width:370px', ul: 'left:950px;top:312px;width:370px' },
+  data: { h: 'left:430px;top:496px;width:500px;text-align:center', ul: 'left:430px;top:548px;width:500px;text-align:center' },
 };
 ---
 <section class="section bg-black" id="how" aria-labelledby="how-title">
@@ -25,14 +25,14 @@ const pos: Record<string, { h: string; ul: string }> = {
     <!-- desktop: знак X и четыре потока -->
     <div class="flows-d">
       <div class="fit" data-fit="1360">
-        <div class="fit__canvas flows" data-anim data-anim-once>
-          <div class="flows__glow" aria-hidden="true"></div>
-          <div class="flows__x" aria-hidden="true"><img src={xMint.src} width="220" height="180" alt="" data-parallax="-0.04" /></div>
+        <div class="fit__canvas flows" style="height:640px" data-anim data-anim-once>
+          <div class="flows__glow" style="top:72px" aria-hidden="true"></div>
+          <div class="flows__x" style="top:232px" aria-hidden="true"><img src={xMint.src} width="220" height="180" alt="" data-parallax="-0.04" /></div>
 
-          <div class="fline fline--v fline--top" style="left:680px;top:96px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
-          <div class="fline fline--v fline--bottom" style="left:680px;top:388px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
-          <div class="fline fline--h fline--left" style="left:426px;top:280px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
-          <div class="fline fline--h fline--right" style="left:814px;top:280px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--v fline--top" style="left:680px;top:160px;height:60px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--v fline--bottom" style="left:680px;top:424px;height:60px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--h fline--left" style="left:426px;top:322px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
+          <div class="fline fline--h fline--right" style="left:814px;top:322px" aria-hidden="true"><span class="fline__run"></span><span class="fline__end"></span></div>
 
           {s.flows.map((f) => (
             <Fragment>
@@ -52,7 +52,7 @@ const pos: Record<string, { h: string; ul: string }> = {
       {s.flows.map((f) => (
         <div class="flows-m__card">
           <h3>{f.title}</h3>
-          <ul>{f.short.map((it) => <li>—&nbsp;{it}</li>)}</ul>
+          <ul>{f.items.map((it) => <li>—&nbsp;{it}</li>)}</ul>
         </div>
       ))}
       <div class="flows-m__x" aria-hidden="true"><img src={xMint.src} width="72" height="59" alt="" /></div>

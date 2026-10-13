@@ -5,4 +5,10 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://umbrellacorp.ai/privacy</loc>
+  </url>
+  <url>
+    <loc>https://umbrellacorp.ai/terms</loc>
+  </url>
 </urlset>

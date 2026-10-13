@@ -21,11 +21,12 @@
 }
 .ticker__row {
   white-space: nowrap;
-  font-size: clamp(44px, 8.5vw, 140px); line-height: 1.02;
+  font-size: clamp(40px, 6.4vw, 96px); line-height: 1.05;
   font-weight: 500; letter-spacing: -0.05em;
 }
 .ticker__row--1 { color: var(--c5); }
-.ticker__row--2 { color: transparent; -webkit-text-stroke: 1px var(--dash); }
+.ticker__row--2 { color: transparent; -webkit-text-stroke: 1.5px var(--dk-4); }
+.ticker__row { will-change: transform; }
 .ticker + .proof { margin-top: clamp(48px, 6vw, 96px); }
 
 /* «Проблема»: карточки складываются стопкой (≥768) */
@@ -37,8 +38,8 @@
     display: grid;
     grid-template-columns: minmax(120px, 200px) minmax(0, 1fr) 40px;
     grid-template-areas: "num body icon";
-    align-items: start; gap: 32px;
-    min-height: 280px; padding: clamp(28px, 3vw, 44px); border-radius: 32px;
+    align-items: center; gap: 32px;
+    min-height: 0; padding: clamp(28px, 3vw, 40px); border-radius: 32px;
     box-shadow: 0 -16px 48px rgba(0, 0, 0, .06);
   }
   .pcard:hover { transform: none; }
@@ -54,16 +55,11 @@
   .pcard:nth-child(4) .icon { color: var(--c2); }
 }
 
-/* модули (≥768): лента карточек; без поддержки — прокрутка вбок */
+/* модули (≥768): сетка без перехвата прокрутки; теги сразу под описанием */
 @media (min-width: 768px) {
-  .mods-pin .sec-head { margin-bottom: clamp(32px, 4vw, 56px); }
-  .mod-grid {
-    display: flex !important; gap: 24px;
-    overflow-x: auto; scroll-snap-type: x mandatory;
-    padding-inline: max(var(--gutter), calc((100vw - 1360px) / 2));
-    padding-bottom: 8px;
-  }
-  .mcard { flex: 0 0 clamp(300px, 30vw, 420px); scroll-snap-align: start; }
+  .mod-grid { max-width: calc(1360px + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); align-items: start; }
+  .mcard { min-height: 0; }
+  .mcard .chips { margin-top: 0; padding-top: 20px; }
 }
 
 /* финансы (≥1200): визуал закреплён, пункты — лентой */
@@ -145,16 +141,9 @@
     .flows-m { view-timeline-name: --sx-flows-m; }
     .flows-m__x { animation: sx-core linear both; animation-timeline: --sx-flows-m; animation-range: entry 20% cover 45%; }
 
-    /* модули: секция закрепляется, лента едет вбок */
+    /* модули: карточки поднимаются по очереди */
     @media (min-width: 768px) {
-      .mods { height: 2700px; padding-block: 0; view-timeline-name: --sx-mods; }
-      .mods-pin {
-        position: sticky; top: var(--header-h);
-        height: min(calc(100vh - var(--header-h)), 900px);
-        display: flex; flex-direction: column; justify-content: center;
-        overflow: hidden;
-      }
-      .mod-grid { overflow: visible; width: max-content; scroll-snap-type: none; animation: sx-track linear both; animation-timeline: --sx-mods; animation-range: contain 0% contain 100%; }
+      .mcard { animation: sx-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
     }
 
     /* финансы: шаги маршрута отмечаются по мере прокрутки */
@@ -187,13 +176,11 @@
     .js [data-anim] .bubble:nth-of-type(2) { animation-range: entry 30% entry 70%; }
     .js [data-anim] .bubble:nth-of-type(3) { animation-range: entry 60% entry 100%; }
 
-    /* слоган в демо: строки загораются по очереди, «Движение.» — мятным */
+    /* демо: строки заголовка загораются по очереди */
     .demo { view-timeline-name: --sx-demo; }
     .slw { color: var(--ln-4); animation: sx-word linear both; animation-timeline: --sx-demo; }
-    .slw--1 { animation-range: entry 30% entry 60%; }
-    .slw--2 { animation-range: entry 50% entry 80%; }
-    .slw--3 { animation-name: sx-word-mint; animation-range: entry 70% entry 100%; }
-    .d-only > .slw--2 { animation-name: sx-word-mint; }
+    .slw--1 { animation-range: entry 30% entry 65%; }
+    .slw--2 { animation-name: sx-word-mint; animation-range: entry 55% entry 95%; }
 
     /* подвал: вордмарк выезжает снизу */
     .js .footer__word[data-reveal] { animation: sx-word-up linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
@@ -223,3 +210,46 @@
 @keyframes sx-word { from { color: var(--ln-4); } to { color: var(--c5); } }
 @keyframes sx-word-mint { from { color: var(--ln-4); } to { color: var(--c2); } }
 @keyframes sx-word-up { from { opacity: .2; transform: translateY(50%); } to { opacity: 1; transform: none; } }
+
+/* — правки по таблице 13.10 — */
+.pcard__more { align-self: flex-start; margin-top: 8px; display: inline-flex; align-items: center; gap: 8px; padding-bottom: 4px; border-bottom: 2px solid var(--c2); font-size: 16px; font-weight: 500; color: var(--c5); }
+.pcard__more:hover { gap: 12px; }
+@media (min-width: 768px) { .pcard__body { align-self: center; } }
+
+/* hero: кнопки под подзаголовком, слева (№7); подзаголовок светлее (№14) */
+@media (min-width: 1200px) {
+  .hero__row { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: clamp(28px, 4vh, 40px); }
+}
+.hero__lead { color: #D9D9D9; }
+
+/* «Для кого»: контент ролей прижат к верху, заголовки в ряду на одной линии (№19) */
+.role > div { margin-top: 0; padding-top: 24px; }
+@media (max-width: 767.98px) { .role > div { padding-top: 0; } }
+
+/* внедрение: факты — подпись мелко, значение крупно (№2) */
+.facts { gap: 20px 48px; }
+.fact { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.fact__l { font-size: 13px; color: var(--ink-3); }
+.fact > span:last-child:not(.ph) { font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; letter-spacing: -0.01em; color: var(--c1); }
+@media (min-width: 768px) { .facts { flex-direction: row; align-items: flex-start; } .fact { flex-direction: column; align-items: flex-start; } }
+
+/* демо: заголовок по делу вместо слогана (№21) */
+.demo__slogan { font-size: clamp(36px, 22px + 3vw, 64px); line-height: 1.04; letter-spacing: -0.035em; }
+
+/* подвал (mobile): зона нажатия ссылок 44px (№23) */
+@media (max-width: 767.98px) {
+  .fcol { gap: 0; }
+  .fcol a { display: block; padding-block: 13px; margin-block: 0; line-height: 18px; }
+  .fcol__t { margin-bottom: 4px; }
+}
+
+/* форма: экран успеха — галочка в мятном круге (№6) */
+.form__success-icon { background: var(--c2); color: var(--c1); }
+
+/* H1 на телефоне: строки текут свободно (≤ 5 строк на 360px), первая — «Umbrella AI —» */
+@media (max-width: 767.98px) {
+  .hero .h1 br ~ br { display: none; }
+  .hero .h1 .h1-line, .hero .h1 .h1-line > span { display: inline; overflow: visible; transform: none; animation: none; }
+  .js .hero .h1 { animation: heroIn .7s var(--ease-out) .15s both; }
+  .pcard__more { padding-block: 10px 4px; }
+}

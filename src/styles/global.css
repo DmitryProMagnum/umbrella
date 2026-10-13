@@ -64,7 +64,7 @@
   --wait-dot: #F29D1F;
   --late-bg: #FFF1E0;
 
-  --font: 'TT Hoves Pro', 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+  --font: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
 
   /* fluid: min @390 → max @1440 */
   --gutter: clamp(20px, 12.57px + 1.905vw, 40px);

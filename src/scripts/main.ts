@@ -153,11 +153,23 @@ const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('[data-par
 const tiltEl = document.querySelector<HTMLElement>('[data-tilt]');
 let ticking = false;
 
+// бегущие строки: в браузерах без animation-timeline едут навстречу через скрипт
+const tickerRows = CSS.supports('animation-timeline: view()')
+  ? []
+  : Array.from(document.querySelectorAll<HTMLElement>('.ticker__row'));
+
 function frame() {
   ticking = false;
   onScrollHeader();
   if (reduceMotion.matches) return;
   const vh = window.innerHeight;
+  for (const row of tickerRows) {
+    const r = row.parentElement!.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) continue;
+    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+    const x = row.classList.contains('ticker__row--2') ? -34 + 38 * p : 4 - 38 * p;
+    row.style.transform = `translate3d(${x.toFixed(2)}%, 0, 0)`;
+  }
   const enabled = mqDesktopish.matches;
   for (const el of parallaxEls) {
     if (!enabled) { el.style.transform = ''; continue; }

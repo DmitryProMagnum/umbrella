@@ -120,14 +120,16 @@ const queueMobile = p.queue.filter((q) => q.titleMobile).slice(0, 4);
         <div class="proof__label">{h.proof.label}</div>
         <p class="proof__text">{h.proof.text}</p>
       </div>
-      <div class="proof__metrics">
-        {h.proof.metrics.map((m, i) => (
-          <div class="metric" data-reveal style={`--i:${i + 1}`}>
-            <span class:list={['metric__value', { ph: isPlaceholder(m.value) }]}>{m.value}</span>
-            <span class="metric__label">{m.label}</span>
-          </div>
-        ))}
-      </div>
+      {h.proof.metrics.length > 0 && (
+        <div class="proof__metrics">
+          {h.proof.metrics.map((m, i) => (
+            <div class="metric" data-reveal style={`--i:${i + 1}`}>
+              <span class:list={['metric__value', { ph: isPlaceholder(m.value) }]}>{m.value}</span>
+              <span class="metric__label">{m.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   </div>
 </section>

@@ -1,0 +1,30 @@
+---
+/** Страница юридического документа: короткая шапка, текст, подвал. Текст — от юриста заказчика. */
+import Base from '../layouts/Base.astro';
+import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
+
+interface Props { title: string; placeholder: string }
+const { title, placeholder } = Astro.props;
+---
+<Base>
+  <header class="site-header legal-header">
+    <div class="container site-header__row">
+      <a href="/" class="site-header__logo" aria-label="Umbrella AI — на главную">
+        <img src={logo.src} width="247" height="26" alt="Umbrella AI" />
+      </a>
+      <a class="btn btn--ghost btn--sm" href="/">← На главную</a>
+    </div>
+  </header>
+  <main id="main" class="legal">
+    <div class="container legal__inner">
+      <h1 class="h2">{title}</h1>
+      <p class="ph ph--light legal__ph">{placeholder}</p>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .legal { background: var(--c5); color: var(--c1); padding-block: var(--sec-pad); min-height: 70vh; }
+  .legal__inner { display: flex; flex-direction: column; gap: 32px; max-width: 880px; }
+  .legal__ph { white-space: normal; padding: 16px 20px; font-size: 16px; line-height: 1.5; }
+</style>
