@@ -1,11 +1,12 @@
 ---
-import { Picture } from 'astro:assets';
 import { home } from '../content/home';
 import Icon from './Icon.astro';
 import Mark from './Mark.astro';
-import portrait from '../assets/img/portrait.jpg';
+import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 
 const s = home.ai;
+const c = s.chat;
+const [first, ...others] = s.examples;
 ---
 <section class="section bg-black" id="ai" aria-labelledby="ai-title">
   <div class="container ai">
@@ -20,14 +21,31 @@ const s = home.ai;
       <a class="btn btn--ghost" href="#demo" data-ai-interest data-goal="ai_launch_click" data-reveal style="--i:2">{s.cta}<Icon name="arrow" size={18} stroke={1.8} /></a>
     </div>
 
-    <div class="ai__media" data-reveal>
-      <div class="parallax-media">
-        <Picture src={portrait} widths={[400, 700, 1020, 1360]} sizes="(min-width: 1200px) 680px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)" formats={['avif', 'webp']} alt={s.imageAlt} loading="lazy" data-parallax="0.1" />
-      </div>
-      <div class="ai__shade" aria-hidden="true"></div>
-      <div class="ai__examples" data-anim>
-        <div class="ai__ex-title"><Mark size={22} /><span>{s.examplesTitle}</span></div>
-        {s.examples.map((ex) => <p class="bubble">{ex}</p>)}
+    <!-- иллюстрация: окно ассистента в портале -->
+    <div class="ai__media aichat-wrap" data-reveal>
+      <img class="aichat-wrap__x" src={xMint.src} width="70" height="58" alt="" aria-hidden="true" />
+      <div class="aichat" aria-hidden="true" data-anim>
+        <div class="aichat__bar">
+          <Mark size={22} />
+          <span class="aichat__title">{c.title}</span>
+          <span class="aichat__soon">{c.soon}</span>
+        </div>
+        <div class="aichat__body">
+          <p class="aichat__q">{first}</p>
+          <div class="aichat__a">
+            <p>{c.answer}</p>
+            <div class="aichat__table">
+              <div class="aichat__row aichat__row--head">{c.columns.map((col) => <span>{col}</span>)}</div>
+              {c.rows.map((r) => <div class="aichat__row">{r.map((cell) => <span>{cell}</span>)}</div>)}
+            </div>
+            <span class="aichat__link">{c.action} →</span>
+          </div>
+          <div class="aichat__hints">
+            <span class="aichat__hints-t">{s.examplesTitle}</span>
+            {others.map((q) => <span class="aichat__hint">{q}</span>)}
+          </div>
+        </div>
+        <div class="aichat__input"><span>{c.input}</span><i><Icon name="arrow" size={16} stroke={2} /></i></div>
       </div>
     </div>
   </div>

@@ -1,9 +1,8 @@
 ---
-import { Picture } from 'astro:assets';
 import { home } from '../content/home';
 import { isPlaceholder } from '../lib/typo';
 import Icon from './Icon.astro';
-import silk from '../assets/img/silk.jpg';
+import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 
 const s = home.demo;
 const f = s.form;
@@ -13,9 +12,7 @@ const endpoint = '';
 <section class="demo-sec bg-white" id="demo" aria-labelledby="demo-title">
   <div class="container">
     <div class="demo" data-reveal>
-      <div class="demo__bg" aria-hidden="true">
-        <Picture src={silk} widths={[600, 1000, 1400, 2000]} sizes="(min-width: 1440px) 1360px, calc(100vw - 40px)" formats={['avif', 'webp']} alt="" loading="lazy" pictureAttributes={{ "data-parallax": "0.08" }} />
-      </div>
+      <div class="demo__bg" aria-hidden="true"><img class="demo__x" src={xMint.src} width="70" height="58" alt="" /></div>
       <div class="demo__shade" aria-hidden="true"></div>
 
       <div class="demo__inner">

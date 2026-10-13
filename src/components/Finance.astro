@@ -1,9 +1,8 @@
 ---
-import { Picture } from 'astro:assets';
 import { home } from '../content/home';
 import Icon from './Icon.astro';
 import SplitText from './SplitText.astro';
-import loop from '../assets/img/loop.jpg';
+import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 
 const s = home.finance;
 const c = s.card;
@@ -15,9 +14,7 @@ const c = s.card;
     <div class="split__visual" data-reveal>
       <div class="fit" data-fit="760" data-fit-min="768" data-fit-max="1.25">
         <div class="fit__canvas vcanvas vfin">
-          <div class="vfin__img" data-parallax="0.06">
-            <Picture src={loop} widths={[320, 480, 720, 960]} sizes="(min-width: 768px) 480px, 86vw" formats={['avif', 'webp']} alt="" loading="lazy" />
-          </div>
+          <img class="vfin__x" src={xMint.src} width="70" height="58" alt="" aria-hidden="true" />
 
           <div class="card-ui float float--slow" aria-hidden="true" data-anim>
             <div class="req__head">

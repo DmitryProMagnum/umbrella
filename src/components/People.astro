@@ -1,8 +1,6 @@
 ---
-import { Picture } from 'astro:assets';
 import { home } from '../content/home';
 import SplitText from './SplitText.astro';
-import signal from '../assets/img/signal.jpg';
 
 const s = home.people;
 const c = s.card;
@@ -17,9 +15,6 @@ const onTime = (C * c.onTime) / 100;
     <div class="split__visual" data-reveal>
       <div class="fit" data-fit="760" data-fit-min="768" data-fit-max="1.25">
         <div class="fit__canvas vcanvas vpeople">
-          <div class="parallax-media">
-            <Picture src={signal} widths={[400, 760, 1140, 1520]} sizes="(min-width: 1200px) 760px, (min-width: 768px) 90vw, 100vw" formats={['avif', 'webp']} alt="" loading="lazy" data-parallax="0.08" />
-          </div>
 
           <div class="card-ui report float float--slow" aria-hidden="true" data-anim data-donut>
             <div class="req__head">
