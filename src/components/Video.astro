@@ -1,0 +1,37 @@
+---
+import { home } from '../content/home';
+
+const s = home.video;
+---
+<section class="section bg-black vsec" id="video" aria-labelledby="video-title">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="video-title">{s.title}</h2>
+      </div>
+      <p class="lead" data-reveal style="--i:1">{s.lead}</p>
+    </div>
+
+    <!-- запускается только по клику: со звуком и стандартными элементами управления -->
+    <div class="vplayer" data-video-player>
+      <video
+        class="vplayer__video"
+        src="/video/system.mp4"
+        poster="/video/system-poster.webp"
+        preload="none"
+        playsinline
+        width="1920"
+        height="1080"
+        aria-label={s.title}
+      ></video>
+      <button type="button" class="vplayer__play" aria-label={s.playAria} data-goal="video_play">
+        <span class="vplayer__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+        </span>
+        <span class="vplayer__label">{s.play}</span>
+        <span class="vplayer__dur num">{s.duration}</span>
+      </button>
+    </div>
+  </div>
+</section>

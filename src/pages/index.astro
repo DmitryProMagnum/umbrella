@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Problem from '../components/Problem.astro';
+import Video from '../components/Video.astro';
 import How from '../components/How.astro';
 import Modules from '../components/Modules.astro';
 import Finance from '../components/Finance.astro';
@@ -29,6 +30,7 @@ const og = await getImage({ src: silk, width: 1200, height: 630, fit: 'cover', f
   <main id="main">
     <Hero />
     <Problem />
+    <Video />
     <How />
     <Modules />
     <Finance />

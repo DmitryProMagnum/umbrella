@@ -224,6 +224,25 @@ if (heroVideo) {
   });
 }
 
+/* ---------- Видео о системе: запуск по кнопке, пауза вне экрана ---------- */
+document.querySelectorAll<HTMLElement>('[data-video-player]').forEach((box) => {
+  const video = box.querySelector('video')!;
+  const btn = box.querySelector<HTMLButtonElement>('.vplayer__play')!;
+  btn.addEventListener('click', () => {
+    video.controls = true;
+    box.classList.add('is-playing');
+    video.play().catch(() => box.classList.remove('is-playing'));
+    video.focus({ preventScroll: true });
+    track('video_play');
+  });
+  video.addEventListener('ended', () => {
+    box.classList.remove('is-playing');
+    video.controls = false;
+    btn.focus({ preventScroll: true });
+  });
+  new IntersectionObserver(([e]) => { if (!e.isIntersecting && !video.paused) video.pause(); }, { threshold: 0.2 }).observe(box);
+});
+
 /* ---------- Кнопка «Узнать о запуске первым» → форма с меткой ai ---------- */
 const interestInput = document.querySelector<HTMLInputElement>('[data-interest]');
 const aiNote = document.querySelector<HTMLElement>('[data-ai-note]');
