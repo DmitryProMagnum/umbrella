@@ -1,0 +1,43 @@
+---
+/** «Цена запуска» — блок со страницы /pricing/ на главной, со ссылкой на полную страницу цен. */
+import { getContent } from '../content';
+import Icon from './Icon.astro';
+import Lines from './Lines.astro';
+
+const home = getContent(Astro.currentLocale);
+const s = home.pricing;
+const c = s.card;
+---
+<section class="section bg-white on-light" id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-head__title" data-reveal>
+        <div class="eyebrow">{s.label}</div>
+        <h2 class="h2" id="pricing-title"><Lines text={s.title} /></h2>
+      </div>
+      <p class="lead" data-reveal style="--i:1">{s.lead}</p>
+    </div>
+
+    <div class="ip" data-reveal>
+      <div class="ip__side">
+        <div class="ip__label">{c.label}</div>
+        <div class="ip__sum num">{c.sum}</div>
+        <div class="ip__tags">
+          {c.tags.map((t) => <span class:list={['status', t.mint ? 'status--mint' : 'status--line']}>{t.text}</span>)}
+        </div>
+        <a class="btn btn--primary btn--md ip__cta" href={s.cta.href} data-goal="pricing_click">{s.cta.label}<Icon name="arrow" size={18} stroke={1.8} /></a>
+      </div>
+      <div class="ip__body">
+        <p class="ip__text">{c.text}</p>
+        <div class="ip-tl" data-anim>
+          <div class="ip-tl__weeks" aria-hidden="true">{c.weeks.map((w) => <span>{w}</span>)}</div>
+          <div class="ip-tl__bar" aria-hidden="true"><span class="ip-tl__fill"></span></div>
+          <ol class="ip-tl__steps">
+            {c.steps.map((st, i) => <li style={`--i:${i}`}><b>{st.title}</b>{st.text}</li>)}
+          </ol>
+        </div>
+        <p class="ip__note">{c.note}</p>
+      </div>
+    </div>
+  </div>
+</section>

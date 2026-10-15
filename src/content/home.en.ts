@@ -425,6 +425,32 @@ export const homeEn: Home = {
     ],
   },
 
+  pricing: {
+    label: '10 — Pricing',
+    title: 'A fixed launch price —\neverything else is optional',
+    lead: 'Support and custom development are purchased separately and at any time — not necessarily at the start.',
+    card: {
+      label: 'Implementation · one-time',
+      sum: `₽${NBSP}180,000`,
+      tags: [
+        { text: '4–6 weeks', mint: true },
+        { text: 'no “from”, no hourly billing', mint: false },
+        { text: 'up to 60 users', mint: false },
+      ],
+      text: 'We move your org structure, set up processes for your company, connect 1C, train administrators and managers — and support you for two weeks after launch.',
+      weeks: ['week 1', '2', '3', '4', '5', '6', '+2 wks'],
+      steps: [
+        { title: 'Org structure', text: 'entities, people, roles' },
+        { title: 'Processes', text: 'routes and directories' },
+        { title: '1C', text: 'standard integration' },
+        { title: 'Training', text: 'two groups' },
+        { title: 'Launch', text: '2 weeks by your side' },
+      ],
+      note: 'Scope and timing are set out in the contract. Setups with more than 60 users are calculated separately.',
+    },
+    cta: { label: 'See pricing (in Russian)', href: '/pricing/' },
+  },
+
   demo: {
     label: 'Connect. Control. Move.',
     slogan: [`See Umbrella${NBSP}AI`, 'on your own processes'],

@@ -10,6 +10,10 @@ import Footer from '../components/Footer.astro';
 import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 ---
 <Base
+  preloadImages={[
+    { href: '/video/hero-poster.webp', media: '(min-width: 768px)', type: 'image/webp' },
+    { href: '/video/hero-poster-mobile.webp', media: '(max-width: 767.98px)', type: 'image/webp' },
+  ]}
   title="Стоимость — Umbrella AI"
   description="Цены Umbrella AI: подписка зависит только от числа пользователей, вся платформа в любой полосе. Внедрение, сопровождение и доработки."
   translated={false}
@@ -18,6 +22,12 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
   <main id="main">
   <!-- Заголовок -->
   <section class="bg-black p-hero on-dark" aria-labelledby="p-title">
+    <!-- видеофон, как на главной (декоративный; запускает main.ts) -->
+    <div class="hero__video" aria-hidden="true">
+      <video class="hero__video-el" muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback tabindex="-1"
+        data-hero-video data-src-desktop="/video/hero-desktop.mp4" data-src-mobile="/video/hero-mobile.mp4"></video>
+      <div class="hero__shade"></div>
+    </div>
     <div class="container p-hero__grid">
       <div>
         <div class="pill-badge hero-anim" style="--d:80">
@@ -411,7 +421,7 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
   .bg-light .scale span,.card:not(.card--dark) .scale span{border-color:var(--c1-20);color:var(--ink-4)}
 
   /* Hero */
-  .p-hero{padding-block:clamp(48px,36px + 4vw,96px) clamp(56px,40px + 4vw,96px);overflow:hidden}
+  .p-hero{position:relative;isolation:isolate;overflow:clip;margin-top:calc(-1 * var(--header-h) - 1px);padding-block:calc(var(--header-h) + clamp(48px,36px + 4vw,96px)) clamp(56px,40px + 4vw,96px)}
   .p-hero__grid{display:grid;gap:clamp(40px,24px + 3vw,64px);align-items:center}
   @media (width>=1100px){.p-hero__grid{grid-template-columns:1.15fr .85fr}}
   .p-hero .h1{margin-top:clamp(20px,16px + 1vw,32px);font-size:clamp(35px,20px + 4vw,80px)}
