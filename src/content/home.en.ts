@@ -419,7 +419,7 @@ export const homeEn: Home = {
       { title: 'Training and launch', text: 'We train your employees and support the launch of the first modules.' },
     ],
     facts: [
-      { label: 'First module launch', value: 'from 2 weeks' },
+      { label: 'First module launch', value: 'from 4 weeks' },
       { label: 'Price', value: 'Calculated after the process review' },
       { label: 'Hosting', value: 'Cloud or your own server' },
     ],
