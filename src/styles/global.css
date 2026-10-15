@@ -324,6 +324,33 @@ button { cursor: pointer; }
 .site-header__actions { display: flex; align-items: center; gap: 24px; }
 .site-header__login { font-size: 15px; transition: color .2s; }
 .site-header__login:hover { color: var(--c2); }
+/* переключатель языка RU / EN */
+.lang {
+  display: inline-flex; align-items: center;
+  height: 36px; padding: 3px;
+  border: 1px solid var(--ln-3);
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500; letter-spacing: .02em;
+}
+.lang__opt {
+  min-width: 34px; height: 28px; padding: 0 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  color: var(--dk-3, #8C8C8C);
+  transition: color .2s, background-color .2s;
+}
+.lang__opt.is-active { background: var(--c5); color: var(--c1); }
+a.lang__opt:hover { color: var(--c2); }
+@media (max-width: 767.98px) { .site-header .lang { display: none; } }
+.mnav__lang {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 52px; padding: 0 22px;
+  border: 1px solid var(--ln-3); border-radius: 999px;
+  font-size: 15px; color: var(--c5);
+  transition: border-color .2s, color .2s;
+}
+.mnav__lang b { font-weight: 500; color: var(--c2); }
+.mnav__lang:hover { border-color: var(--c2); }
 .burger {
   width: 44px; height: 44px;
   padding: 0;

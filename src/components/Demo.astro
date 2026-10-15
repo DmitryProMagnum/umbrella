@@ -1,5 +1,6 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import { isPlaceholder } from '../lib/typo';
 import Icon from './Icon.astro';
 import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
@@ -58,7 +59,7 @@ const endpoint = '';
 
           <!-- honeypot -->
           <div class="hp" aria-hidden="true">
-            <label for="d-website">Сайт</label>
+            <label for="d-website">{home.ui.honeypot}</label>
             <input id="d-website" name="website" type="text" tabindex="-1" autocomplete="off" />
           </div>
           <input type="hidden" name="interest" value="" data-interest />

@@ -1,22 +1,27 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import Icon from './Icon.astro';
 import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
 
-const { nav, header } = home;
+const { nav, header, ui, links } = home;
 ---
 <div class="scroll-progress" aria-hidden="true"></div>
 <header class="site-header" data-header>
   <div class="container site-header__row">
-    <a href="/" class="site-header__logo" aria-label={header.homeLabel}>
+    <a href={links.home} class="site-header__logo" aria-label={header.homeLabel}>
       <img src={logo.src} width="247" height="26" alt="Umbrella AI" />
     </a>
-    <nav class="nav" aria-label="Основная навигация">
+    <nav class="nav" aria-label={ui.navMain}>
       <ul>
         {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
       </ul>
     </nav>
     <div class="site-header__actions">
+      <div class="lang" role="group" aria-label={ui.lang.aria}>
+        <span class="lang__opt is-active" aria-current="true">{ui.lang.current}</span>
+        <a class="lang__opt" href={ui.lang.other.href} hreflang={ui.lang.other.lang} lang={ui.lang.other.lang} title={ui.lang.other.title} data-lang-link>{ui.lang.other.label}</a>
+      </div>
       <a class="btn btn--primary btn--sm site-header__cta" href="#demo" data-goal="demo_click">{header.cta}</a>
       <button type="button" class="burger" aria-label={header.menuOpen} aria-expanded="false" aria-controls="mnav" data-menu-open>
         <Icon name="menu" size={20} stroke={1.7} />
@@ -25,14 +30,14 @@ const { nav, header } = home;
   </div>
 </header>
 
-<div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Меню" data-menu inert>
+<div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label={ui.menu} data-menu inert>
   <div class="mnav__top">
-    <a href="/" aria-label={header.homeLabel}><img src={logo.src} width="190" height="20" alt="Umbrella AI" /></a>
+    <a href={links.home} aria-label={header.homeLabel}><img src={logo.src} width="190" height="20" alt="Umbrella AI" /></a>
     <button type="button" class="burger" aria-label={header.menuClose} data-menu-close>
       <Icon name="close" size={20} stroke={1.7} />
     </button>
   </div>
-  <nav aria-label="Мобильная навигация">
+  <nav aria-label={ui.navMobile}>
     <ul class="mnav__list">
       {nav.map((item) => (
         <li><a href={item.href} data-menu-link>{item.label}<Icon name="arrow" size={22} /></a></li>
@@ -40,6 +45,7 @@ const { nav, header } = home;
     </ul>
   </nav>
   <div class="mnav__bottom">
+    <a class="mnav__lang" href={ui.lang.other.href} hreflang={ui.lang.other.lang} lang={ui.lang.other.lang} data-lang-link><span>{ui.lang.other.title}</span><b>{ui.lang.other.label}</b></a>
     <a class="btn btn--primary" href="#demo" data-menu-link data-goal="demo_click">{header.cta}</a>
   </div>
 </div>

@@ -4,6 +4,8 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://umbrellacorp.ai',
   compressHTML: true,
+  // русская версия — в корне, английская — /en/
+  i18n: { locales: ['ru', 'en'], defaultLocale: 'ru', routing: { prefixDefaultLocale: false } },
   devToolbar: { enabled: false },
   build: { inlineStylesheets: 'always' },
   image: {

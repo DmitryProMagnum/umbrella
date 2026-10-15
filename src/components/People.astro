@@ -1,5 +1,6 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import SplitText from './SplitText.astro';
 
 const s = home.people;

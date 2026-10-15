@@ -1,5 +1,6 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import Icon from './Icon.astro';
 import SplitText from './SplitText.astro';
 import xMint from '../assets/logo/umbrellacorp-x-mint.svg';

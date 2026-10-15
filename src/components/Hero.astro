@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import { isPlaceholder } from '../lib/typo';
 import Icon from './Icon.astro';
 import Mark from './Mark.astro';

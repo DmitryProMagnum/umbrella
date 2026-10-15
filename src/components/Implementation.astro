@@ -1,5 +1,6 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import { isPlaceholder } from '../lib/typo';
 import Lines from './Lines.astro';
 
@@ -30,7 +31,7 @@ const s = home.implementation;
               )}
             </div>
             <div>
-              <h3><span class="sr-only">Шаг {i + 1}. </span>{st.title}</h3>
+              <h3><span class="sr-only">{home.ui.step} {i + 1}. </span>{st.title}</h3>
               <p>{st.text}</p>
             </div>
           </li>

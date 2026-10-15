@@ -1,6 +1,7 @@
 ---
 /** Окно портала — иллюстрация (aria-hidden, без фокусируемых элементов). */
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import Icon from './Icon.astro';
 import logoLight from '../assets/logo/umbrellacorp-logo-on-light.svg';
 

@@ -52,6 +52,13 @@ if ('ResizeObserver' in window) {
 const header = document.querySelector<HTMLElement>('[data-header]');
 const onScrollHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
 
+/* ---------- Переключатель языка: сохраняем якорь секции ---------- */
+document.querySelectorAll<HTMLAnchorElement>('[data-lang-link]').forEach((a) => {
+  a.addEventListener('click', () => {
+    if (location.hash) a.href = (a.getAttribute('href') || '/').split('#')[0] + location.hash;
+  });
+});
+
 /* ---------- Мобильное меню ---------- */
 const menu = document.querySelector<HTMLElement>('[data-menu]');
 const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');

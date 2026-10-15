@@ -1,18 +1,23 @@
 ---
 /** Страница юридического документа: короткая шапка, текст, подвал. Текст — от юриста заказчика. */
 import Base from '../layouts/Base.astro';
+import { getContent } from '../content';
 import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
 
-interface Props { title: string; placeholder: string }
-const { title, placeholder } = Astro.props;
+interface Props { doc: 'privacy' | 'terms' }
+const { doc } = Astro.props;
+const home = getContent(Astro.currentLocale);
+const l = home.ui.legal;
+const title = doc === 'privacy' ? l.privacyTitle : l.termsTitle;
+const placeholder = doc === 'privacy' ? l.privacyPlaceholder : l.termsPlaceholder;
 ---
-<Base>
+<Base title={`${title} — Umbrella AI`}>
   <header class="site-header legal-header">
     <div class="container site-header__row">
-      <a href="/" class="site-header__logo" aria-label="Umbrella AI — на главную">
+      <a href={home.links.home} class="site-header__logo" aria-label={home.header.homeLabel}>
         <img src={logo.src} width="247" height="26" alt="Umbrella AI" />
       </a>
-      <a class="btn btn--ghost btn--sm" href="/">← На главную</a>
+      <a class="btn btn--ghost btn--sm" href={home.links.home}>{l.back}</a>
     </div>
   </header>
   <main id="main" class="legal">

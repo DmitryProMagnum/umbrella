@@ -1,5 +1,6 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import { isPlaceholder } from '../lib/typo';
 import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
 import wordmark from '../assets/logo/umbrellacorp-wordmark-white.svg';
@@ -15,7 +16,7 @@ const contacts = s.contacts.filter((c) => !isPlaceholder(c.label));
         <p>{s.text}</p>
         <a class="btn btn--primary btn--md" href="#demo" data-goal="demo_click">{s.cta}</a>
       </div>
-      <nav class="footer__nav" aria-label="Навигация в подвале">
+      <nav class="footer__nav" aria-label={home.ui.navFooter}>
         {s.columns.map((col) => (
           <div class="fcol">
             <h2 class="fcol__t">{col.title}</h2>

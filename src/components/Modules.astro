@@ -1,5 +1,6 @@
 ---
-import { home } from '../content/home';
+import { getContent } from '../content';
+const home = getContent(Astro.currentLocale);
 import Icon from './Icon.astro';
 import Lines from './Lines.astro';
 
@@ -27,7 +28,7 @@ const s = home.modules;
             <h3>{m.title}</h3>
           </div>
           <p class="mcard__text">{m.text}</p>
-          <ul class="chips" aria-label={`Модули: ${m.title}`}>
+          <ul class="chips" aria-label={`${home.ui.modulesAria}: ${m.title}`}>
             {m.chips.map((c) => (
               <li class:list={['chip', { 'chip--soon': c.soon }]}>
                 {c.label}{c.soon && <span class="chip__soon">{s.soonLabel}</span>}
