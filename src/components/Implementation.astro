@@ -43,7 +43,11 @@ const s = home.implementation;
       {s.facts.map((f) => (
         <div class="fact">
           <span class="fact__l">{f.label}</span>
-          <span class:list={[{ 'ph ph--light': isPlaceholder(f.value) }]}>{f.value}</span>
+          {f.href ? (
+            <a class="fact__link" href={f.href}>{f.value}<span aria-hidden="true"> →</span></a>
+          ) : (
+            <span class:list={[{ 'ph ph--light': isPlaceholder(f.value) }]}>{f.value}</span>
+          )}
         </div>
       ))}
     </div>

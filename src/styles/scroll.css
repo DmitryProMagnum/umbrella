@@ -361,3 +361,11 @@
 /* overflow: hidden делает блок прокручиваемым контейнером, и view()-анимации внутри
    привязываются к нему, а не к странице (и стоят на месте). clip обрезает так же, но контейнером не становится. */
 .hero, .vcanvas, .ai__media, .footer { overflow: clip; }
+
+/* факт «Стоимость» ведёт на /pricing/ */
+.fact__link {
+  font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; letter-spacing: -0.01em; color: var(--c1);
+  text-decoration: underline; text-decoration-color: var(--c2); text-decoration-thickness: 2px; text-underline-offset: 6px;
+  transition: text-decoration-color .2s;
+}
+.fact__link:hover { text-decoration-color: var(--c1); }

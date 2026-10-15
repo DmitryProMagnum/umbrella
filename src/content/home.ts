@@ -60,6 +60,7 @@ const content = {
     { label: 'Модули', href: '#modules' },
     { label: 'Для групп компаний', href: '#groups' },
     { label: 'Внедрение', href: '#implementation' },
+    { label: 'Стоимость', href: '/pricing/' },
   ],
 
   header: {
@@ -430,9 +431,9 @@ const content = {
     ],
     facts: [
       { label: 'Запуск первого модуля', value: 'от 2 недель' },
-      { label: 'Стоимость', value: 'Рассчитаем после разбора процессов' },
+      { label: 'Стоимость', value: 'от 350 000 ₽ в год', href: '/pricing/' },
       { label: 'Размещение', value: 'Облако или ваш сервер' },
-    ],
+    ] as { label: string; value: string; href?: string }[],
   },
 
   demo: {
@@ -489,6 +490,7 @@ const content = {
         title: 'Компания',
         links: [
           { label: 'Внедрение', href: '#implementation' },
+          { label: 'Стоимость', href: '/pricing/' },
           { label: 'Контакты', href: '#contacts' },
         ],
       },

@@ -1,0 +1,715 @@
+---
+/**
+ * Страница «Стоимость» (/pricing/). Перенесено из макета umbrella-pricing-handoff на общий лейаут:
+ * шапка, подвал и стили сайта — общие. Цены записаны и в разметке (data-count), и в src/scripts/pricing.js
+ * (TIERS, YEAR) — при изменении править оба места.
+ */
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
+---
+<Base
+  title="Стоимость — Umbrella AI"
+  description="Цены Umbrella AI: подписка зависит только от числа пользователей, вся платформа в любой полосе. Внедрение, сопровождение и доработки."
+  translated={false}
+>
+  <Header current="/pricing/" />
+  <main id="main">
+  <!-- Заголовок -->
+  <section class="bg-black p-hero on-dark" aria-labelledby="p-title">
+    <div class="container p-hero__grid">
+      <div>
+        <div class="pill-badge hero-anim" style="--d:80">
+          <svg viewBox="0 0 107.57 107.58" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M 78.75 42.39 C 75.5 47.72 66.99 51.26 57.47 51.26 L 73.29 25.39 L 89.16 25.39 Z M 73.29 83.15 L 61.13 63.26 C 59.73 60.99 56.9 59.56 53.79 59.56 C 50.68 59.56 47.83 60.99 46.44 63.26 L 34.28 83.15 L 18.42 83.15 L 28.82 66.15 C 32.08 60.83 40.59 57.27 50.1 57.27 L 57.47 57.27 C 66.99 57.27 75.5 60.83 78.75 66.15 L 89.16 83.15 Z M 34.28 25.39 L 50.1 51.26 C 40.59 51.26 32.08 47.72 28.82 42.39 L 18.42 25.39 Z M 78.5 0 L 29.07 0 C 13.01 0 0 13.02 0 29.08 L 0 78.5 C 0 94.55 13.01 107.58 29.07 107.58 L 78.5 107.58 C 94.56 107.58 107.57 94.55 107.57 78.5 L 107.57 29.08 C 107.57 13.02 94.56 0 78.5 0 Z"></path></svg>
+          <span>Стоимость</span>
+        </div>
+        <h1 class="h1" id="p-title">
+          <span class="h1-line"><span style="--d:160">Цена зависит</span></span><br>
+          <span class="h1-line"><span style="--d:260">только от <span class="mint">числа</span></span></span><br>
+          <span class="h1-line"><span style="--d:360"><span class="mint">пользователей</span></span></span>
+        </h1>
+        <p class="p-hero__lead hero-anim" style="--d:480">Не от набора модулей: во всех полосах доступна вся платформа. Пользователь — это человек с доступом в Umbrella; добавить его внутри полосы ничего не стоит.</p>
+        <div class="p-hero__chips hero-anim" style="--d:580">
+          <span class="chip"><span class="dot dot--live"></span>Вся платформа в любой полосе</span>
+          <span class="chip">Внедрение <b>фикс</b></span>
+          <span class="chip">Цены <b>с НДС</b></span>
+        </div>
+      </div>
+
+      <div class="hero-anim" style="--d:520">
+        <div class="ticket" aria-label="Пример: компания на 48 пользователей — полоса 26–60, 550 000 ₽ в год">
+          <div class="ticket__top">
+            <div class="ticket__co"><span class="ticket__av">А</span><div>ООО «Альтаир»<small>+ ещё 2 юрлица в группе</small></div></div>
+            <span class="status status--mint">26–60</span>
+          </div>
+          <div class="label">48 пользователей</div>
+          <div class="dots" data-dots="120" data-on="48" aria-hidden="true"></div>
+          <div class="scale" aria-hidden="true"><span>25</span><span>60</span><span>120</span></div>
+          <div class="ticket__sum"><span>Подписка в год</span><b class="num" data-count="550000">550 000 ₽</b></div>
+          <div class="ticket__float"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>ещё 12 человек — бесплатно</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Полосы -->
+  <section class="section bg-light on-light" id="tiers" aria-labelledby="tiers-title">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-head__title" data-reveal>
+          <div class="eyebrow">01 — Подписка</div>
+          <h2 class="h2" id="tiers-title">Три полосы —<br> вся платформа в каждой</h2>
+        </div>
+        <p class="lead" data-reveal style="--i:1">Цена за год, фиксируется на весь срок договора. Если в компании меньше двадцати человек, Umbrella вам, скорее всего, не нужна: операционка ещё помещается в голову собственника.</p>
+      </div>
+
+      <div class="tiers">
+        <article class="card tier lift" data-reveal style="--i:0">
+          <div class="tier__head"><div class="label">До 25 пользователей</div><span class="tag tag--line">Старт</span></div>
+          <div class="dots" data-dots="120" data-on="25" aria-hidden="true"></div>
+          <div class="tier__price"><span class="tier__sum num" data-count="350000">350 000 ₽</span><span class="tier__per">в год</span></div>
+          <span class="status status--line tier__month" data-count="29000" data-suf="&nbsp;₽ в месяц">29 000 ₽ в месяц</span>
+          <p class="tier__text">Обычно компания до полусотни человек: собственник, руководители и офис. Производство и склад в контур пока не входят.</p>
+        </article>
+        <article class="card card--dark tier tier--hit lift on-dark" data-reveal style="--i:1">
+          <div class="tier__head"><div class="label" style="color:var(--c2)">26–60 пользователей</div><span class="status status--mint"><span class="dot dot--live"></span>Как у нас · 3 года</span></div>
+          <div class="dots" data-dots="120" data-on="60" aria-hidden="true"></div>
+          <div class="tier__price"><span class="tier__sum num" data-count="550000">550 000 ₽</span><span class="tier__per">в год</span></div>
+          <span class="status status--line tier__month" style="border-color:var(--ln-4);color:var(--dk-2)" data-count="46000" data-suf="&nbsp;₽ в месяц">46 000 ₽ в месяц</span>
+          <p class="tier__text">Размер, на котором операционка перестаёт быть видимой без системы. Здесь Umbrella работает три года внутри нашей собственной группы.</p>
+        </article>
+        <article class="card tier lift" data-reveal style="--i:2">
+          <div class="tier__head"><div class="label">61–120 пользователей</div><span class="tag tag--line">Группа</span></div>
+          <div class="dots" data-dots="120" data-on="120" aria-hidden="true"></div>
+          <div class="tier__price"><span class="tier__sum num" data-count="950000">950 000 ₽</span><span class="tier__per">в год</span></div>
+          <span class="status status--line tier__month" data-count="79000" data-suf="&nbsp;₽ в месяц">79 000 ₽ в месяц</span>
+          <p class="tier__text">Несколько юрлиц, площадки в разных городах, руководители среднего звена между вами и работой.</p>
+        </article>
+      </div>
+
+      <div class="card more" data-reveal>
+        <div class="more__l">
+          <span class="tag tag--black">120+</span>
+          <p><strong style="font-weight:500">Больше 120 пользователей</strong> <span>— посчитаем под вашу структуру: число юрлиц, площадок и контуров учёта</span></p>
+        </div>
+        <a class="btn btn--dark btn--md" href="#calc">Посчитать
+          <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="incl" data-reveal>
+        <div class="eyebrow">В любую полосу входит</div>
+        <div class="incl__chips">
+          <span class="chip"><span class="ico" data-check></span>Вся платформа — без тарифов по функциям</span>
+          <span class="chip"><span class="ico" data-check></span>Новые пользователи внутри полосы — бесплатно</span>
+          <span class="chip"><span class="ico" data-check></span>Типовая интеграция с 1С</span>
+          <span class="chip"><span class="ico" data-check></span>Поддержка и обновления</span>
+          <span class="chip"><span class="ico" data-check></span>Обучение администратора и руководителей</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Калькулятор -->
+  <section class="section bg-white on-light" id="calc" aria-labelledby="calc-title">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-head__title" data-reveal>
+          <div class="eyebrow">02 — Калькулятор</div>
+          <h2 class="h2" id="calc-title">Посчитайте<br> под свою компанию</h2>
+        </div>
+        <p class="lead" data-reveal style="--i:1">Двигайте ползунок — полоса, юрлица, способ оплаты и сопровождение пересчитываются сразу. Итог за первый год, с внедрением и НДС.</p>
+      </div>
+
+      <div class="calc on-dark" data-reveal data-calc>
+        <div class="calc__ctl">
+          <div class="field">
+            <div class="field__top"><label for="c-users">Сколько людей будет в системе</label><output class="field__val num" for="c-users" data-out-users>48</output></div>
+            <input class="range" id="c-users" type="range" min="5" max="200" step="1" value="48" data-users>
+            <div class="scale" aria-hidden="true" style="grid-template-columns:20fr 35fr 60fr 80fr"><span>5</span><span>25</span><span>60</span><span>120+</span></div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <div class="field__lbl" id="c-ent-l" style="margin-bottom:12px">Юрлиц в контуре</div>
+              <div class="stepper" role="group" aria-labelledby="c-ent-l">
+                <button type="button" aria-label="Меньше" data-ent="-1">−</button>
+                <output class="num" data-out-ent>1</output>
+                <button type="button" aria-label="Больше" data-ent="1">+</button>
+              </div>
+            </div>
+            <div class="field">
+              <div class="field__lbl" id="c-pay-l" style="margin-bottom:12px">Оплата</div>
+              <div class="seg" role="group" aria-labelledby="c-pay-l" data-pay>
+                <button type="button" aria-pressed="true" data-v="year">За год</button>
+                <button type="button" aria-pressed="false" data-v="quarter">Поквартально <small>+15%</small></button>
+              </div>
+            </div>
+          </div>
+          <label class="switch"><input type="checkbox" data-support><span class="switch__t"></span><span>Персональное сопровождение</span></label>
+        </div>
+
+        <div class="calc__res" data-res aria-live="polite">
+          <div class="res__tier"><div class="label" data-res-label>Полоса 26–60</div><span class="status status--mint" data-res-users>48 из 60 мест</span></div>
+          <div class="dots" data-dots="120" data-on="48" data-live aria-hidden="true"></div>
+          <div class="res__total"><b class="num" data-res-total>730 000 ₽</b><span>за первый год</span></div>
+          <ul class="res__rows">
+            <li><span data-res-sub-l>Подписка</span><b class="num" data-res-sub>550 000 ₽</b></li>
+            <li data-row-ent hidden><span data-res-ent-l>Доп. юрлица</span><b class="num" data-res-ent>0 ₽</b></li>
+            <li data-row-sup hidden><span>Сопровождение, 12 мес</span><b class="num" data-res-sup>0 ₽</b></li>
+            <li><span>Внедрение · один раз</span><b class="num" data-res-impl>180 000 ₽</b></li>
+          </ul>
+          <p class="res__note" data-res-note>Со второго года — только подписка.</p>
+          <p class="res__custom">Больше 120 человек — посчитаем под вашу структуру: юрлица, площадки, контуры учёта.</p>
+          <a class="btn btn--primary btn--md res__cta" href="/#demo">Получить точный расчёт</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Внедрение и дополнительно -->
+  <section class="section bg-light on-light" id="extras" aria-labelledby="extras-title">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-head__title" data-reveal>
+          <div class="eyebrow">03 — Внедрение и сопровождение</div>
+          <h2 class="h2" id="extras-title">Фиксированная цена запуска —<br> остальное по желанию</h2>
+        </div>
+        <p class="lead" data-reveal style="--i:1">Сопровождение и доработки покупаются отдельно и в любой момент — не обязательно на старте.</p>
+      </div>
+
+      <div class="card impl" data-reveal>
+        <div>
+          <div class="label">Внедрение · один раз</div>
+          <div class="impl__sum num" data-count="180000">180 000 ₽</div>
+          <div class="impl__tags">
+            <span class="status status--mint">4–6 недель</span>
+            <span class="status status--line">не «от» и не по часам</span>
+            <span class="status status--line">до 60 пользователей</span>
+          </div>
+        </div>
+        <div class="impl__body">
+          <p>Переносим оргструктуру, настраиваем процессы под вашу компанию, подключаем 1С, обучаем администраторов и руководителей — и две недели сопровождаем после запуска.</p>
+          <div class="tl" data-tl>
+            <div class="tl__weeks" aria-hidden="true"><span>неделя 1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>+2 нед.</span></div>
+            <div class="tl__bar"><span class="tl__fill"></span></div>
+            <ol class="tl__steps">
+              <li style="--i:0"><b>Оргструктура</b>юрлица, люди, роли</li>
+              <li style="--i:1"><b>Процессы</b>маршруты и справочники</li>
+              <li style="--i:2"><b>1С</b>типовая интеграция</li>
+              <li style="--i:3"><b>Обучение</b>две группы</li>
+              <li style="--i:4"><b>Запуск</b>2 недели рядом</li>
+            </ol>
+          </div>
+          <p class="muted">Объём работ и срок записаны в договоре. Для контуров больше 60 пользователей считается отдельно.</p>
+        </div>
+      </div>
+
+      <div class="incl" data-reveal style="margin-top:clamp(40px,28px + 3vw,64px)">
+        <div class="eyebrow">Можно добавить</div>
+      </div>
+      <div class="addons">
+
+        <!-- Сопровождение -->
+        <article class="card card--dark addon on-dark" data-reveal style="--i:0" data-support-card>
+          <div class="mgr">
+            <div class="mgr__who"><span class="mgr__av">ИК</span><div><b>Ваш менеджер</b><small>знает вашу настройку</small></div></div>
+            <span class="status status--mint" style="background:#22f2cf26;color:var(--c2)"><span class="dot dot--live"></span>на связи</span>
+          </div>
+          <div class="mgr__msg">В октябре 14 счетов ждали согласования дольше 5 дней — все у одного руководителя. <b>Предлагаю добавить порог в маршрут.</b></div>
+          <div class="mgr__typing" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></div>
+
+          <h3>Персональное сопровождение</h3>
+          <p class="addon__lead">Выделенный менеджер ведёт вашу систему вместо внутреннего администратора: отвечает по любому вопросу и сам приносит проблемы, которые видит в данных.</p>
+
+          <div class="pricebox">
+            <div class="seg" role="group" aria-label="Размер компании" data-sup-seg>
+              <button type="button" aria-pressed="false" data-v="15000">До 25</button>
+              <button type="button" aria-pressed="true" data-v="25000">26–60</button>
+              <button type="button" aria-pressed="false" data-v="40000">61–120</button>
+            </div>
+            <div class="pricebox__v"><b class="num" data-sup-price>25 000 ₽</b><span>в месяц</span></div>
+          </div>
+
+          <div class="sla">
+            <div class="sla__i"><b>1 час</b><span>ответ в рабочее время</span></div>
+            <div class="sla__i sla__i--hot"><b><span class="dot dot--live"></span>15 мин</b><span>если критично</span></div>
+          </div>
+          <div class="hrs" data-hrs>
+            <div class="hrs__top"><span>Часы разработки копятся в квартале</span><b data-count="6" data-suf="&nbsp;ч">6 ч</b></div>
+            <div class="hrs__bar" aria-hidden="true"><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i><i style="--k:3"></i><i style="--k:4"></i><i style="--k:5"></i></div>
+            <div class="hrs__m" aria-hidden="true"><span>месяц 1 · 2 ч</span><span>месяц 2 · 2 ч</span><span>месяц 3 · 2 ч</span></div>
+          </div>
+          <ul class="ticks">
+            <li><span class="ico" data-check></span>Один контакт по всем вопросам — от сбоя до нового процесса</li>
+            <li><span class="ico" data-check></span>Ежемесячный разбор данных с собственником: не отчёт о работе, а список мест, где система показывает проблему</li>
+            <li><span class="ico" data-check></span>Новые процессы и обучение новых руководителей — без отдельного счёта</li>
+            <li><span class="ico" data-check></span>Доработки сверх лимита — 2 900 ₽ в час, без минимального заказа</li>
+          </ul>
+        </article>
+
+        <!-- Доработки -->
+        <article class="card addon" data-reveal style="--i:1">
+          <span class="tag tag--mint" style="align-self:flex-start">Обновления не теряются</span>
+          <div class="layers" aria-hidden="true">
+            <div class="layer layer--you">Ваш процесс <small>отдельный слой</small></div>
+            <div class="layer layer--base">Платформа Umbrella <small>обновляется</small></div>
+            <svg class="layers__arrow" viewBox="0 0 22 110" fill="none"><path d="M11 106V8" stroke="currentColor" stroke-width="2"/><path d="M4 15l7-8 7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:none;animation:none"/></svg>
+          </div>
+          <h3>Доработки под ваши процессы</h3>
+          <p class="addon__lead">Если процесс не ложится в типовой, мы его дописываем — отдельным слоем поверх платформы, а не отдельной версией системы для вас.</p>
+          <div class="rate">
+            <span class="rate__big"><b class="num" data-count="3200">3 200 ₽</b><span>/ час</span></span>
+            <span class="status status--line">минимум 20 часов</span>
+          </div>
+          <ul class="menu">
+            <li><span class="menu__n">Готовый модуль из каталога под вашу специфику</span><span class="menu__dots"></span><span class="menu__p" data-count="160000" data-pre="от ">от 160 000 ₽</span></li>
+            <li><span class="menu__n">Новый модуль под ваш процесс</span><span class="menu__dots"></span><span class="menu__p" data-count="350000" data-pre="от ">от 350 000 ₽</span></li>
+            <li><span class="menu__n">Интеграция с 1С сверх типовой</span><span class="menu__dots"></span><span class="menu__p" data-count="250000" data-pre="от ">от 250 000 ₽</span></li>
+            <li><span class="menu__n">Перенос данных из прежней системы</span><span class="menu__dots"></span><span class="menu__p" data-count="90000" data-pre="от ">от 90 000 ₽</span></li>
+          </ul>
+          <div class="estimate">
+            <div class="estimate__in">
+              <span class="ico" data-check style="background:#22f2cf26"></span>
+              <p><b>Фиксированная смета</b> — после двух недель аналитики за 90 000 ₽. Эти деньги засчитываются в проект.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Оплата -->
+  <section class="section bg-white on-light" id="payment" aria-labelledby="pay-title">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-head__title" data-reveal>
+          <div class="eyebrow">04 — Оплата</div>
+          <h2 class="h2" id="pay-title">Платите так,<br> как удобно бюджету</h2>
+        </div>
+        <p class="lead" data-reveal style="--i:1">Выберите вариант — справа видно, когда и сколько уходит денег. Подписка оплачивается заранее за период.</p>
+      </div>
+
+      <div class="plan" data-reveal data-plan>
+        <div>
+          <div class="opts" role="radiogroup" aria-label="Способ оплаты">
+            <button type="button" class="opt" role="radio" aria-checked="true" data-mode="year">
+              <span class="opt__r"></span><span class="opt__t">Раз в год</span><span class="opt__k">×1</span>
+              <span class="opt__d">Базовая цена, фиксируется на весь срок договора</span>
+            </button>
+            <button type="button" class="opt" role="radio" aria-checked="false" data-mode="quarter">
+              <span class="opt__r"></span><span class="opt__t">Поквартально</span><span class="opt__k">+15%</span>
+              <span class="opt__d">Четыре платежа в год — нагрузка на бюджет ровнее</span>
+            </button>
+            <button type="button" class="opt" role="radio" aria-checked="false" data-mode="two">
+              <span class="opt__r"></span><span class="opt__t">Договор на два года</span><span class="opt__k">0%</span>
+              <span class="opt__d">Цена не меняется два года — без индексации при продлении</span>
+            </button>
+          </div>
+          <div class="opts__tier">
+            <span class="field__lbl" id="plan-tier-l">Полоса</span>
+            <div class="seg seg--light" role="group" aria-labelledby="plan-tier-l" data-plan-tier>
+              <button type="button" aria-pressed="false" data-v="0">До 25</button>
+              <button type="button" aria-pressed="true" data-v="1">26–60</button>
+              <button type="button" aria-pressed="false" data-v="2">61–120</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sched on-dark" aria-live="polite">
+          <div class="sched__top">
+            <div class="sched__sum">
+              <div class="label" data-plan-cap>Платёж в начале года</div>
+              <b class="num" data-plan-sum>550 000 ₽</b>
+              <small data-plan-sub>1 платёж за 12 месяцев</small>
+            </div>
+            <span class="status status--mint sched__badge" style="background:#22f2cf26;color:var(--c2)" data-plan-badge>Базовая цена</span>
+          </div>
+          <div class="bars" data-bars aria-hidden="true"></div>
+          <div class="months" data-months aria-hidden="true"></div>
+          <div class="sched__foot">
+            <span class="status">За период: <b class="num" data-plan-total>550 000 ₽</b></span>
+            <span class="status" data-plan-month>≈ <b class="num" data-plan-mb>45 833 ₽</b> в месяц</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="terms" data-reveal>
+        <div class="term">
+          <div class="term__k"><span class="mint" data-count="20" data-pre="+" data-suf="">+20</span>%</div>
+          <div class="term__t">За каждое следующее юрлицо</div>
+          <p class="term__d">Второе и последующие юрлица в контуре — к подписке. Сопровождение и доработки — отдельно, в любой момент.</p>
+        </div>
+        <div class="term">
+          <div class="term__k"><span data-count="100" data-suf="">100</span><span class="mint">%</span></div>
+          <div class="term__t">Руководителей — в системе</div>
+          <p class="term__d">От собственника до начальника смены. Без части из них картина неполная — говорим об этом на внедрении.</p>
+        </div>
+        <div class="term">
+          <div class="term__k">1<span class="mint">С</span></div>
+          <div class="term__t">Остаётся на месте</div>
+          <p class="term__d">Umbrella ставится поверх 1С и не заменяет её. Все цены указаны с НДС.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Призыв -->
+  <section class="demo-sec bg-white" id="raschet" aria-labelledby="demo-title">
+    <div class="container">
+      <div class="demo" data-reveal>
+        <div class="demo__bg" aria-hidden="true"><img class="demo__x" src={xMint.src} width="70" height="58" alt=""></div>
+        <div class="demo__shade" aria-hidden="true"></div>
+        <div class="demo__inner">
+          <div class="demo__copy">
+            <div class="demo__label">Связь. Контроль. Движение.</div>
+            <h2 class="demo__slogan" id="demo-title">Покажем Umbrella AI<br>на ваших данных</h2>
+            <p class="demo__text">Демонстрация идёт на вашей оргструктуре, а не на демо-данных — договориться можно на эту же неделю.</p>
+          </div>
+          <div class="demo__side">
+            <div class="demo__actions">
+              <a class="btn btn--primary btn--lg" href="/#demo">Показать на моих данных</a>
+              <a class="btn btn--onDark btn--lg" href="#calc">Посчитать под мою компанию</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+  <Footer />
+  <script>
+    import '../scripts/main.ts';
+    import '../scripts/pricing.js';
+    import '../scripts/pricing-motion.js';
+  </script>
+</Base>
+
+<style is:global>
+  /* Страница цен: поверх стилей основного сайта (site.css) */
+  .nav a[aria-current="page"]{color:var(--c2)}
+  .num{font-variant-numeric:tabular-nums}
+  .label{font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4)}
+  .card{background:var(--c5);border-radius:var(--r-card);padding:clamp(22px,18px + 1vw,36px);position:relative}
+  .card--dark{background:var(--c1);color:var(--c5)}
+  .card--dark .label{color:var(--dk-4)}
+  .lift{transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
+  @media (hover:hover){.lift:hover{transform:translateY(-6px);box-shadow:var(--shadow-float)}}
+  .tag--line{border:1px solid var(--c1-20);color:var(--ink-2)}
+  .card--dark .tag--line{border-color:var(--ln-4);color:var(--dk-2)}
+  .ico{flex:none;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--c1);color:var(--c2)}
+  .card--dark .ico{background:#22f2cf1f}
+
+  /* Точки-пользователи */
+  .dots{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:clamp(3px,2px + .2vw,5px)}
+  .dots i{aspect-ratio:1;border-radius:50%;background:var(--c4);transition:background-color .25s,transform .25s var(--ease-spring);transition-delay:calc(var(--k,0) * 6ms)}
+  .dots i.on{background:var(--c1);transform:scale(1.08)}
+  .on-dark .dots i{background:#262626}
+  .on-dark .dots i.on{background:var(--c2)}
+  .on-dark .dots i.on.t2{background:#1fd6b5}
+  .on-dark .dots i.on.t3{background:#14a58c}
+  .scale{display:grid;grid-template-columns:25fr 35fr 60fr;margin-top:10px;font-size:12px;color:var(--dk-4)}
+  .scale span{border-left:1px solid var(--ln-4);padding-left:6px}
+  .bg-light .scale span,.card:not(.card--dark) .scale span{border-color:var(--c1-20);color:var(--ink-4)}
+
+  /* Hero */
+  .p-hero{padding-block:clamp(48px,36px + 4vw,96px) clamp(56px,40px + 4vw,96px);overflow:hidden}
+  .p-hero__grid{display:grid;gap:clamp(40px,24px + 3vw,64px);align-items:center}
+  @media (width>=1100px){.p-hero__grid{grid-template-columns:1.15fr .85fr}}
+  .p-hero .h1{margin-top:clamp(20px,16px + 1vw,32px);font-size:clamp(35px,20px + 4vw,80px)}
+  .p-hero__lead{font-size:var(--fs-lead-hero);color:#d9d9d9;line-height:1.5;max-width:600px;margin:clamp(20px,16px + 1vw,32px) 0 0}
+  .p-hero__chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .p-hero__chips .chip{background:#141414;color:#d9d9d9;border:1px solid var(--ln-2);gap:8px}
+  .p-hero__chips .chip b{color:var(--c2);font-weight:500}
+  .ticket{background:#0b0b0b;border:1px solid var(--ln-2);border-radius:var(--r-media);padding:clamp(20px,16px + 1vw,32px);box-shadow:var(--shadow-window);animation:floaty 6s ease-in-out infinite;position:relative}
+  .ticket:before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(140deg,#22f2cf80,transparent 40%,transparent 70%,#22f2cf40);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .ticket__top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+  .ticket__co{display:flex;align-items:center;gap:10px;font-size:15px}
+  .ticket__av{width:34px;height:34px;border-radius:10px;background:var(--c2);color:var(--c1);display:grid;place-items:center;font-weight:600;font-size:14px}
+  .ticket__co small{display:block;color:var(--dk-4);font-size:12px}
+  .ticket__sum{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:22px;padding-top:18px;border-top:1px dashed var(--ln-4)}
+  .ticket__sum b{font-size:clamp(30px,24px + 1.4vw,40px);font-weight:500;letter-spacing:-.04em}
+  .ticket__sum span{color:var(--dk-4);font-size:14px}
+  .ticket__float{position:absolute;right:-10px;bottom:-18px;background:var(--c2);color:var(--c1);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:500;box-shadow:0 12px 30px #22f2cf40;display:flex;align-items:center;gap:8px}
+  @media (width<=767.98px){.ticket__float{right:12px}}
+
+  /* Полосы */
+  .tiers{display:grid;gap:16px}
+  @media (width>=960px){.tiers{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
+  .tier{display:flex;flex-direction:column;overflow:hidden}
+  .tier__head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .tier .dots{margin-top:22px}
+  .tier__price{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:28px}
+  .tier__sum{font-size:clamp(38px,30px + 2vw,54px);font-weight:500;letter-spacing:-.04em;line-height:1}
+  .tier__per{font-size:16px;color:var(--ink-3)}
+  .tier__month{margin-top:14px;align-self:flex-start}
+  .tier__text{margin:24px 0 0;padding-top:20px;border-top:1px solid var(--c4);color:var(--ink-2);line-height:1.55}
+  .tier--hit .tier__per{color:var(--dk-3)}
+  .tier--hit .tier__text{border-color:var(--ln-3);color:var(--dk-2)}
+  .tier--hit:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,var(--c2),transparent);background-size:50% 100%;background-repeat:no-repeat;animation:sweep 3.2s linear infinite}
+  @keyframes sweep{from{background-position:-100% 0}to{background-position:200% 0}}
+  .tier--hit .status--mint{background:#22f2cf26;color:var(--c2)}
+
+  .more{display:flex;flex-direction:column;gap:16px;margin-top:16px;padding-block:20px;background:transparent;border:1px dashed var(--c1-50)}
+  .more__l{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .more p{margin:0;line-height:1.5}
+  .more p span{color:var(--ink-3)}
+  @media (width>=960px){.more{flex-direction:row;align-items:center;justify-content:space-between;margin-top:20px}}
+
+  .incl{margin-top:clamp(40px,28px + 3vw,64px);display:flex;flex-direction:column;gap:18px}
+  .incl__chips{display:flex;flex-wrap:wrap;gap:10px}
+  .incl__chips .chip{height:44px;padding:0 18px 0 8px;gap:10px;font-size:15px;transition:transform .3s var(--ease-spring),background-color .2s}
+  .incl__chips .chip:hover{transform:translateY(-3px) rotate(-1deg);background:var(--c2-20)}
+  .incl__chips .ico{width:28px;height:28px}
+
+  /* Калькулятор */
+  .calc{background:var(--c1);color:var(--c5);border-radius:var(--r-panel);padding:clamp(20px,14px + 2vw,56px);display:grid;gap:clamp(28px,20px + 2vw,56px);position:relative;overflow:hidden;isolation:isolate}
+  .calc:after{content:"";position:absolute;z-index:-1;width:520px;height:520px;right:-180px;top:-220px;background:radial-gradient(closest-side,#22f2cf2e,transparent);pointer-events:none}
+  @media (width>=1100px){.calc{grid-template-columns:1fr 1fr}}
+  .calc__ctl{display:flex;flex-direction:column;gap:30px}
+  .field__top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+  .field__top label,.field__lbl{font-size:15px;color:var(--dk-2)}
+  .field__val{font-size:clamp(28px,22px + 1.4vw,40px);font-weight:500;letter-spacing:-.04em;line-height:1}
+  .field__val small{font-size:15px;color:var(--dk-4);letter-spacing:0;font-weight:400}
+  .range{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;--p:20%}
+  .range::-webkit-slider-runnable-track{height:6px;border-radius:999px;background:linear-gradient(90deg,var(--c2) var(--p),#262626 var(--p))}
+  .range::-moz-range-track{height:6px;border-radius:999px;background:linear-gradient(90deg,var(--c2) var(--p),#262626 var(--p))}
+  .range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:var(--c5);border:6px solid var(--c2);box-shadow:0 0 0 6px #22f2cf26;transition:transform .2s var(--ease-spring)}
+  .range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--c5);border:6px solid var(--c2);box-shadow:0 0 0 6px #22f2cf26}
+  .range:active::-webkit-slider-thumb{transform:scale(1.15)}
+  .range:focus-visible{outline:2px solid var(--c2);outline-offset:6px;border-radius:8px}
+  .seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:999px;background:#141414;border:1px solid var(--ln-2)}
+  .seg button{font:inherit;font-size:14px;color:var(--dk-2);background:transparent;border:0;border-radius:999px;height:38px;padding:0 16px;cursor:pointer;transition:background-color .25s,color .25s;display:inline-flex;align-items:center;gap:6px}
+  .seg button:hover{color:var(--c5)}
+  .seg button[aria-pressed="true"]{background:var(--c2);color:var(--c1)}
+  .seg button small{font-size:11px;opacity:.75}
+  .stepper{display:inline-flex;align-items:center;gap:6px;background:#141414;border:1px solid var(--ln-2);border-radius:999px;padding:4px}
+  .stepper button{width:38px;height:38px;border-radius:50%;border:0;background:#262626;color:var(--c5);font-size:20px;line-height:1;cursor:pointer;transition:background-color .2s}
+  .stepper button:hover{background:var(--c2);color:var(--c1)}
+  .stepper output{min-width:34px;text-align:center;font-size:18px;font-weight:500}
+  .row2{display:flex;flex-wrap:wrap;gap:24px 40px}
+  .switch{display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none}
+  .switch input{position:absolute;opacity:0;width:1px;height:1px}
+  .switch__t{width:52px;height:30px;border-radius:999px;background:#262626;position:relative;transition:background-color .25s;flex:none}
+  .switch__t:after{content:"";position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:var(--c5);transition:transform .3s var(--ease-spring)}
+  .switch input:checked + .switch__t{background:var(--c2)}
+  .switch input:checked + .switch__t:after{transform:translateX(22px);background:var(--c1)}
+  .switch input:focus-visible + .switch__t{outline:2px solid var(--c2);outline-offset:3px}
+  .switch span:last-child{color:var(--dk-2);font-size:15px}
+  .calc__res{background:#0b0b0b;border:1px solid var(--ln-2);border-radius:var(--r-media);padding:clamp(20px,16px + 1vw,32px);display:flex;flex-direction:column}
+  .calc__res .dots{margin-top:16px}
+  .res__tier{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .res__total{margin-top:24px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .res__total b{font-size:clamp(40px,30px + 2.6vw,64px);font-weight:500;letter-spacing:-.045em;line-height:1;color:var(--c2)}
+  .res__total span{color:var(--dk-4)}
+  .res__rows{list-style:none;margin:22px 0 0;padding:16px 0 0;border-top:1px dashed var(--ln-4);display:grid;gap:10px}
+  .res__rows li{display:flex;justify-content:space-between;gap:16px;font-size:15px;color:var(--dk-2)}
+  .res__rows li b{font-weight:500;color:var(--c5);white-space:nowrap}
+  .res__rows li[hidden]{display:none}
+  .res__note{margin:16px 0 0;font-size:13px;color:var(--dk-4);line-height:1.5}
+  .res__cta{margin-top:22px;align-self:flex-start}
+  .res__custom{display:none;margin-top:24px;font-size:clamp(24px,20px + 1vw,32px);font-weight:500;letter-spacing:-.03em;line-height:1.15}
+  .calc__res.is-custom .res__custom{display:block}
+  .calc__res.is-custom .res__total,.calc__res.is-custom .res__rows,.calc__res.is-custom .res__note{display:none}
+
+  /* Внедрение */
+  .impl{display:grid;gap:28px}
+  @media (width>=1000px){.impl{grid-template-columns:300px 1fr;gap:56px}}
+  .impl__sum{font-size:clamp(38px,30px + 2vw,54px);font-weight:500;letter-spacing:-.04em;line-height:1;margin-top:18px}
+  .impl__tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .impl__body > p{margin:0;font-size:clamp(17px,16px + .3vw,19px);line-height:1.5}
+  .impl__body > p.muted{margin-top:14px;font-size:15px;color:var(--ink-2)}
+  .tl{margin-top:28px;position:relative}
+  .tl__bar{height:6px;border-radius:999px;background:var(--c4);position:relative;overflow:hidden}
+  .tl__fill{position:absolute;inset:0;width:0;background:linear-gradient(90deg,var(--c1),var(--c1) 80%,var(--c2));border-radius:inherit;transition:width 1.8s var(--ease-out) .2s}
+  .tl.is-in .tl__fill{width:100%}
+  .tl__steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:-15px}
+  .tl__steps li{display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.3;color:var(--ink-2)}
+  .tl__steps li:before{content:"";width:24px;height:24px;border-radius:50%;background:var(--c5);border:2px solid var(--c1-20);transition:background-color .3s,border-color .3s;transition-delay:calc(.3s + var(--i) * .35s)}
+  .tl.is-in .tl__steps li:before{background:var(--c1);border-color:var(--c1);box-shadow:inset 0 0 0 5px var(--c1),inset 0 0 0 12px var(--c2)}
+  .tl__steps li:last-child:before{border-style:dashed}
+  .tl__steps b{color:var(--c1);font-weight:500;font-size:14px}
+  .tl__weeks{display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px;color:var(--ink-4)}
+  @media (width<=640px){.tl__steps{grid-template-columns:1fr;margin-top:16px;gap:12px}.tl__steps li{flex-direction:row;align-items:center}.tl__steps li:before{flex:none}}
+
+  /* Можно добавить */
+  .addons{display:grid;gap:16px;margin-top:20px}
+  @media (width>=1000px){.addons{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+  .addon{display:flex;flex-direction:column;overflow:hidden}
+  .addon h3{margin:20px 0 0;font-size:clamp(24px,20px + 1vw,32px);font-weight:500;letter-spacing:-.03em;line-height:1.1}
+  .addon__lead{margin:12px 0 0;line-height:1.55;color:var(--ink-2)}
+  .card--dark .addon__lead{color:var(--dk-3)}
+  .mgr{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .mgr__who{display:flex;align-items:center;gap:12px}
+  .mgr__av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--c2),#14a58c);color:var(--c1);display:grid;place-items:center;font-weight:600;position:relative}
+  .mgr__av:after{content:"";position:absolute;right:0;bottom:0;width:12px;height:12px;border-radius:50%;background:#1fd6b5;border:2px solid var(--c1);animation:2.4s ease-in-out infinite live}
+  .mgr__who b{display:block;font-weight:500}
+  .mgr__who small{color:var(--dk-4);font-size:13px}
+  .mgr__msg{margin-top:22px;background:#141414;border:1px solid var(--ln-2);border-radius:18px 18px 18px 6px;padding:14px 16px;font-size:14px;line-height:1.5;color:var(--dk-2);max-width:440px;position:relative}
+  .mgr__msg b{color:var(--c2);font-weight:500}
+  .mgr__typing{align-self:flex-start;display:inline-flex;gap:4px;margin-top:10px;padding:8px 12px;background:#141414;border-radius:999px;border:1px solid var(--ln-2)}
+  .mgr__typing i{width:6px;height:6px;border-radius:50%;background:var(--dk-4);animation:blink 1.2s infinite;animation-delay:calc(var(--k) * .2s)}
+  .pricebox{margin-top:24px;padding:18px;border-radius:20px;background:#141414;border:1px solid var(--ln-2);display:flex;flex-direction:column;gap:14px}
+  .pricebox__v{display:flex;align-items:baseline;gap:8px}
+  .pricebox__v b{font-size:clamp(32px,26px + 1.4vw,44px);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--c5);display:inline-block;transition:transform .3s var(--ease-spring),opacity .2s}
+  .pricebox__v b.bump{transform:translateY(-6px);opacity:.3}
+  .pricebox__v span{color:var(--dk-4)}
+  .sla{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+  .sla__i{border-radius:16px;border:1px solid var(--ln-2);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+  .sla__i b{font-size:26px;font-weight:500;letter-spacing:-.03em;color:var(--c5);display:flex;align-items:center;gap:8px}
+  .sla__i span{font-size:13px;color:var(--dk-4)}
+  .sla__i--hot b{color:var(--c2)}
+  .hrs{margin-top:10px;border-radius:16px;border:1px solid var(--ln-2);padding:14px 16px}
+  .hrs__top{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--dk-4)}
+  .hrs__top b{color:var(--c5);font-weight:500;font-size:15px}
+  .hrs__bar{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px}
+  .hrs__bar i{height:10px;border-radius:3px;background:#262626;transition:background-color .3s;transition-delay:calc(var(--k) * .18s + .3s)}
+  .is-in .hrs__bar i{background:var(--c2)}
+  .hrs__m{display:grid;grid-template-columns:repeat(3,1fr);margin-top:6px;font-size:11px;color:var(--dk-4);text-align:center}
+  .ticks{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:12px}
+  .ticks li{display:flex;gap:12px;align-items:flex-start;line-height:1.45;font-size:15px}
+  .ticks .ico{width:22px;height:22px;margin-top:0}
+  .card--dark .ticks li{color:var(--dk-2)}
+
+  .layers{position:relative;height:178px;margin-top:22px;border-radius:20px;background:var(--c1-5);overflow:hidden}
+  .layer{position:absolute;left:50%;width:min(78%,360px);height:52px;border-radius:14px;transform:translateX(-50%);display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:14px;font-weight:500}
+  .layer--base{bottom:20px;background:var(--c1);color:var(--c5)}
+  .layer--base small{color:var(--dk-4);font-weight:400}
+  .layer--you{bottom:92px;background:var(--c2);color:var(--c1);box-shadow:0 18px 40px #22f2cf4d;animation:floaty 3.6s ease-in-out infinite}
+  .layer--you small{font-weight:400;opacity:.7}
+  .layer__up{position:absolute;left:calc(50% - min(39%,180px) - 6px);bottom:28px;display:flex;flex-direction:column;gap:3px}
+  .layers__arrow{position:absolute;right:calc(50% - min(39%,180px) - 34px);bottom:30px;width:22px;height:110px;color:var(--c1-50)}
+  .layers__arrow path{stroke-dasharray:4 4;animation:dashflow .8s linear infinite reverse}
+  .rate{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:24px}
+  .rate__big{display:inline-flex;align-items:baseline;gap:6px;background:var(--c1);color:var(--c5);border-radius:999px;padding:10px 20px}
+  .rate__big b{font-size:26px;font-weight:500;letter-spacing:-.03em}
+  .rate__big span{color:var(--dk-3);font-size:14px}
+  .menu{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:4px}
+  .menu li{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-inline:-14px;border-radius:14px;transition:background-color .2s}
+  .menu li:hover{background:var(--c2-5)}
+  .menu__n{flex:1 1 auto;min-width:0;line-height:1.35;font-size:15px}
+  .menu__dots{flex:1 1 20px;border-bottom:1px dashed var(--c1-20);min-width:12px;align-self:center}
+  .menu__p{flex:none;background:var(--c2-20);color:var(--mint-ink);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:500;white-space:nowrap}
+  @media (width<=520px){.menu__dots{display:none}.menu li{flex-wrap:wrap;gap:6px}}
+  .estimate{margin-top:auto;padding-top:20px}
+  .estimate__in{background:var(--c1);color:var(--c5);border-radius:20px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
+  .estimate__in p{margin:0;font-size:14px;line-height:1.5;color:var(--dk-2)}
+  .estimate__in b{color:var(--c5);font-weight:500}
+  .estimate__in .tag--black{background:#22f2cf26}
+
+  /* Оплата */
+  .plan{display:grid;gap:clamp(16px,12px + 1vw,24px);background:var(--c1-5);border-radius:var(--r-panel);padding:clamp(12px,8px + 1vw,24px)}
+  @media (width>=1100px){.plan{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}}
+  .opts{display:grid;gap:10px;align-content:start}
+  .opt{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:4px 16px;align-items:center;background:var(--c5);border-radius:22px;padding:18px 20px;border:1.5px solid transparent;transition:border-color .25s,background-color .25s,transform .3s var(--ease-out)}
+  .opt:hover{transform:translateX(4px)}
+  .opt:focus-visible{outline:2px solid var(--c1);outline-offset:2px}
+  .opt__r{grid-row:span 2;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--c1-20);position:relative;transition:border-color .25s}
+  .opt__r:after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--c2);transform:scale(0);transition:transform .3s var(--ease-spring)}
+  .opt__t{font-size:18px;font-weight:500;letter-spacing:-.01em}
+  .opt__d{grid-column:2;font-size:14px;color:var(--ink-3);line-height:1.45}
+  .opt__k{grid-row:span 2;align-self:center;font-size:clamp(24px,20px + 1vw,32px);font-weight:500;letter-spacing:-.04em;color:var(--c1-20);transition:color .25s}
+  .opt[aria-checked="true"]{background:var(--c1);color:var(--c5);border-color:var(--c1)}
+  .opt[aria-checked="true"] .opt__r{border-color:var(--c2)}
+  .opt[aria-checked="true"] .opt__r:after{transform:scale(1)}
+  .opt[aria-checked="true"] .opt__d{color:var(--dk-3)}
+  .opt[aria-checked="true"] .opt__k{color:var(--c2)}
+  .opts__tier{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;padding:14px 6px 4px}
+  .opts__tier .field__lbl{color:var(--ink-3);font-size:14px}
+  .seg--light{background:var(--c5);border-color:var(--c4)}
+  .seg--light button{color:var(--ink-2)}
+  .seg--light button:hover{color:var(--c1)}
+  .seg--light button[aria-pressed="true"]{background:var(--c1);color:var(--c5)}
+
+  .sched{background:var(--c1);color:var(--c5);border-radius:calc(var(--r-panel) - 8px);padding:clamp(20px,16px + 1vw,32px);display:flex;flex-direction:column;position:relative;overflow:hidden;isolation:isolate;min-height:420px}
+  .sched:after{content:"";position:absolute;z-index:-1;width:420px;height:420px;left:-140px;bottom:-220px;background:radial-gradient(closest-side,#22f2cf26,transparent);pointer-events:none}
+  .sched__top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .sched__sum b{display:block;font-size:clamp(36px,28px + 2vw,56px);font-weight:500;letter-spacing:-.045em;line-height:1;margin-top:10px}
+  .sched__sum small{display:block;margin-top:8px;color:var(--dk-4);font-size:14px}
+  .sched__badge{transition:opacity .25s}
+  .sched__badge.status--warn{background:#3a2a10;color:#f2b65a}
+  .bars{flex:1;display:grid;grid-template-columns:repeat(var(--n,12),minmax(0,1fr));gap:clamp(2px,1px + .3vw,6px);align-items:end;margin-top:28px;min-height:170px;position:relative}
+  .bars:before{content:"";position:absolute;left:0;right:0;bottom:0;border-bottom:1px dashed var(--ln-4)}
+  .pbar{position:relative;height:100%;display:flex;align-items:flex-end}
+  .pbar i{display:block;width:100%;height:6px;border-radius:6px 6px 3px 3px;background:#1f1f1f;transition:height .6s var(--ease-spring),background-color .3s;transition-delay:calc(var(--k) * 25ms)}
+  .pbar.pay i{background:linear-gradient(180deg,var(--c2),#14a58c);box-shadow:0 0 24px #22f2cf33}
+  .pbar.pay.y2 i{background:linear-gradient(180deg,#9ff9ea,#22f2cf)}
+  .pbar b{position:absolute;left:50%;bottom:calc(var(--h) + 8px);transform:translateX(-50%);font-size:12px;font-weight:500;white-space:nowrap;color:var(--c5);opacity:0;transition:opacity .3s,bottom .6s var(--ease-spring)}
+  .pbar.pay b{opacity:1}
+  .months{display:grid;grid-template-columns:repeat(var(--n,12),minmax(0,1fr));gap:clamp(2px,1px + .3vw,6px);margin-top:8px;font-size:11px;color:var(--dk-4);text-align:center}
+  .months span{visibility:hidden;white-space:nowrap}
+  .months span.q{visibility:visible}
+  .months span.paid{color:var(--c2)}
+  .sched__foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--ln-2)}
+  .sched__foot .status{background:#141414;color:var(--dk-2);border:1px solid var(--ln-2)}
+  .sched__foot .status b{color:var(--c5);font-weight:500}
+
+  .terms{display:grid;margin-top:clamp(28px,20px + 2vw,48px);border-top:1px solid var(--c1-20)}
+  @media (width>=960px){.terms{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .term{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--c1-20)}
+  @media (width>=960px){.term{padding:26px 28px 6px;border-bottom:0;border-left:1px solid var(--c1-20)}.term:first-child{border-left:0;padding-left:0}}
+  .term__k{grid-row:span 2;font-size:clamp(34px,28px + 1.4vw,48px);font-weight:500;letter-spacing:-.05em;line-height:.9;min-width:2.2ch}
+  .term__k .mint{color:var(--mint-ink)}
+  .term__t{font-size:16px;font-weight:500}
+  .term__d{margin:0;font-size:14px;line-height:1.5;color:var(--ink-3)}
+
+  .demo__actions{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+  .demo__actions .btn{width:100%}
+  @media (width>=768px) and (width<1200px){.demo__actions{flex-direction:row;flex-wrap:wrap}.demo__actions .btn{width:auto}}
+  .demo__side{display:flex;flex-direction:column;gap:24px}
+  .btn--onDark{border-color:var(--ln-4);color:var(--c5);background:0 0}
+  .btn--onDark:hover{border-color:var(--dk-4);background:#ffffff0a}
+
+  /* Варианты оплаты не вылезают за экран на телефоне */
+  .plan > *{min-width:0}
+  .opt{width:100%;min-width:0;text-align:left}
+  .opt__t,.opt__d{min-width:0}
+
+  /* Пересчёт цифр: короткая мятная вспышка */
+  .ticking{animation:tick .75s var(--ease-out)}
+  @keyframes tick{0%{text-shadow:0 0 0 #22f2cf00}30%{text-shadow:0 0 18px #22f2cf80}100%{text-shadow:0 0 0 #22f2cf00}}
+
+  /* Кнопки: заливка-волна снизу, перекат букв, рябь */
+  .btn{position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out),border-color .4s,background-color .4s,box-shadow .4s,transform .2s var(--ease-out)}
+  .btn:before{content:"";position:absolute;z-index:-1;left:50%;top:100%;width:150%;aspect-ratio:1;border-radius:50%;background:var(--fill,var(--c1));transform:translate(-50%,0) scale(.3);transition:transform .6s var(--ease-out),top .6s var(--ease-out)}
+  .btn:hover:before,.btn:focus-visible:before{top:50%;transform:translate(-50%,-50%) scale(1)}
+  .btn--primary{--fill:var(--c1)}
+  .btn--primary:hover{background:var(--c2);color:var(--c2);box-shadow:inset 0 0 0 1.5px var(--c2),0 10px 30px #22f2cf40}
+  .btn--dark{--fill:var(--c2)}
+  .btn--dark:hover{background:var(--c1);color:var(--c1);box-shadow:0 10px 30px #22f2cf33}
+  .btn--dark:hover .icon{color:var(--c1)}
+  .btn--ghost,.btn--onDark{--fill:var(--c5)}
+  .btn--ghost:hover,.btn--onDark:hover{color:var(--c1);border-color:var(--c5);background:transparent}
+  .btn:hover .icon{transform:translateX(4px) rotate(-45deg)}
+  .roll{display:inline-grid;overflow:hidden;line-height:1.25;padding-block:.05em}
+  .roll > span{grid-area:1/1;white-space:nowrap}
+  .roll i{display:inline-block;font-style:normal;transition:transform .5s var(--ease-out);transition-delay:calc(var(--i) * 14ms)}
+  .roll__b i{transform:translateY(115%)}
+  .btn:hover .roll__a i{transform:translateY(-115%)}
+  .btn:hover .roll__b i{transform:none}
+  .ripple{position:absolute;z-index:2;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:currentColor;opacity:.35;pointer-events:none;animation:ripple .65s var(--ease-out) forwards}
+  @keyframes ripple{to{transform:scale(var(--rs,40));opacity:0}}
+
+  /* Переключатели: бегунок переезжает к выбранному варианту */
+  .seg{position:relative;isolation:isolate}
+  .seg__thumb{position:absolute;z-index:-1;left:0;top:0;border-radius:999px;background:var(--c2);transition:transform .5s var(--ease-spring),width .5s var(--ease-spring),height .3s;box-shadow:0 6px 20px #22f2cf40}
+  .seg--light .seg__thumb{background:var(--c1);box-shadow:0 6px 20px #0000002e}
+  .seg.has-thumb button[aria-pressed="true"]{background:transparent}
+  .seg button{position:relative;overflow:hidden;transition:color .3s,transform .25s var(--ease-spring)}
+  .seg button:hover{transform:translateY(-1px)}
+  .seg button:active{transform:scale(.95)}
+  .stepper button{position:relative;overflow:hidden;transition:background-color .25s,color .25s,transform .35s var(--ease-spring)}
+  .stepper button:hover{transform:scale(1.12) rotate(90deg)}
+  .stepper button:active{transform:scale(.88)}
+  .opt{position:relative;overflow:hidden}
+  .opt:active{transform:scale(.985)}
+  .opt:hover .opt__k{transform:scale(1.12) rotate(-4deg)}
+  .opt__k{transition:color .25s,transform .4s var(--ease-spring)}
+  .opt:hover .opt__r{border-color:var(--c2)}
+
+  /* Когда работает GSAP, CSS-появление отключено — анимирует motion.js */
+  .js.gsap-on [data-reveal]{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    .ticket,.layer--you,.tier--hit:before,.mgr__av:after,.mgr__typing i,.layers__arrow path{animation:none}
+    .tl__fill,.dots i,.hrs__bar i{transition:none}
+  }
+</style>

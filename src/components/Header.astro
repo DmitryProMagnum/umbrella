@@ -5,6 +5,11 @@ import Icon from './Icon.astro';
 import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
 
 const { nav, header, ui, links } = home;
+interface Props { /** адрес текущей страницы — пункт меню получит aria-current */ current?: string }
+const { current } = Astro.props;
+// на внутренних страницах якоря главной ведут на главную
+const isHome = Astro.url.pathname === links.home;
+const to = (href: string) => (href.startsWith('#') && !isHome ? links.home + href : href);
 ---
 <div class="scroll-progress" aria-hidden="true"></div>
 <header class="site-header" data-header>
@@ -14,7 +19,7 @@ const { nav, header, ui, links } = home;
     </a>
     <nav class="nav" aria-label={ui.navMain}>
       <ul>
-        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        {nav.map((item) => <li><a href={to(item.href)} aria-current={item.href === current ? 'page' : undefined}>{item.label}</a></li>)}
       </ul>
     </nav>
     <div class="site-header__actions">
@@ -22,7 +27,7 @@ const { nav, header, ui, links } = home;
         <span class="lang__opt is-active" aria-current="true">{ui.lang.current}</span>
         <a class="lang__opt" href={ui.lang.other.href} hreflang={ui.lang.other.lang} lang={ui.lang.other.lang} title={ui.lang.other.title} data-lang-link>{ui.lang.other.label}</a>
       </div>
-      <a class="btn btn--primary btn--sm site-header__cta" href="#demo" data-goal="demo_click">{header.cta}</a>
+      <a class="btn btn--primary btn--sm site-header__cta" href={to('#demo')} data-goal="demo_click">{header.cta}</a>
       <button type="button" class="burger" aria-label={header.menuOpen} aria-expanded="false" aria-controls="mnav" data-menu-open>
         <Icon name="menu" size={20} stroke={1.7} />
       </button>
@@ -40,12 +45,12 @@ const { nav, header, ui, links } = home;
   <nav aria-label={ui.navMobile}>
     <ul class="mnav__list">
       {nav.map((item) => (
-        <li><a href={item.href} data-menu-link>{item.label}<Icon name="arrow" size={22} /></a></li>
+        <li><a href={to(item.href)} aria-current={item.href === current ? 'page' : undefined} data-menu-link>{item.label}<Icon name="arrow" size={22} /></a></li>
       ))}
     </ul>
   </nav>
   <div class="mnav__bottom">
     <a class="mnav__lang" href={ui.lang.other.href} hreflang={ui.lang.other.lang} lang={ui.lang.other.lang} data-lang-link><span>{ui.lang.other.title}</span><b>{ui.lang.other.label}</b></a>
-    <a class="btn btn--primary" href="#demo" data-menu-link data-goal="demo_click">{header.cta}</a>
+    <a class="btn btn--primary" href={to('#demo')} data-menu-link data-goal="demo_click">{header.cta}</a>
   </div>
 </div>

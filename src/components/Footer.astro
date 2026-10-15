@@ -6,6 +6,8 @@ import logo from '../assets/logo/umbrellacorp-logo-on-dark.svg';
 import wordmark from '../assets/logo/umbrellacorp-wordmark-white.svg';
 
 const s = home.footer;
+const isHome = Astro.url.pathname === home.links.home;
+const to = (href: string) => (href.startsWith('#') && !isHome && href !== '#contacts' ? home.links.home + href : href);
 const contacts = s.contacts.filter((c) => !isPlaceholder(c.label));
 ---
 <footer class="footer">
@@ -14,13 +16,13 @@ const contacts = s.contacts.filter((c) => !isPlaceholder(c.label));
       <div class="footer__brand">
         <img src={logo.src} width="266" height="28" alt="Umbrella AI" />
         <p>{s.text}</p>
-        <a class="btn btn--primary btn--md" href="#demo" data-goal="demo_click">{s.cta}</a>
+        <a class="btn btn--primary btn--md" href={to('#demo')} data-goal="demo_click">{s.cta}</a>
       </div>
       <nav class="footer__nav" aria-label={home.ui.navFooter}>
         {s.columns.map((col) => (
           <div class="fcol">
             <h2 class="fcol__t">{col.title}</h2>
-            {col.links.map((l) => <a href={l.href}>{l.label}</a>)}
+            {col.links.map((l) => <a href={to(l.href)}>{l.label}</a>)}
           </div>
         ))}
         {contacts.length > 0 && (

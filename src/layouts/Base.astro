@@ -11,8 +11,11 @@ interface Props {
   ogImage?: string;
   /** заголовок вкладки для внутренних страниц (по умолчанию — из meta) */
   title?: string;
+  description?: string;
+  /** есть ли у страницы версия на другом языке (для hreflang) */
+  translated?: boolean;
 }
-const { preloadImages = [], ogImage, title } = Astro.props;
+const { preloadImages = [], ogImage, title, description, translated = true } = Astro.props;
 const { meta, ui, locale } = home;
 const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://umbrellacorp.ai';
 const canonical = new URL(Astro.url.pathname, site).toString();
@@ -20,7 +23,7 @@ const canonical = new URL(Astro.url.pathname, site).toString();
 const path = Astro.url.pathname;
 const ruPath = locale === 'en' ? path.replace(/^\/en(\/|$)/, '/') : path;
 const enPath = locale === 'en' ? path : `/en${path === '/' ? '/' : path}`;
-const alternates = [
+const alternates = !translated ? [] : [
   { lang: 'ru', href: new URL(ruPath, site).toString() },
   { lang: 'en', href: new URL(enPath, site).toString() },
 ];
@@ -54,10 +57,10 @@ const schema = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title ?? meta.title}</title>
-    <meta name="description" content={meta.description} />
+    <meta name="description" content={description ?? meta.description} />
     <link rel="canonical" href={canonical} />
     {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
-    <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <meta name="theme-color" content="#000000" />
     {analytics.ymId && <meta name="ym-id" content={analytics.ymId} />}
     <meta name="color-scheme" content="dark light" />
@@ -72,8 +75,8 @@ const schema = [
     <meta property="og:locale" content={meta.ogLocale} />
     <meta property="og:locale:alternate" content={locale === 'en' ? 'ru_RU' : 'en_US'} />
     <meta property="og:site_name" content={meta.siteName} />
-    <meta property="og:title" content={meta.ogTitle} />
-    <meta property="og:description" content={meta.description} />
+    <meta property="og:title" content={title ?? meta.ogTitle} />
+    <meta property="og:description" content={description ?? meta.description} />
     <meta property="og:url" content={canonical} />
     {ogImageAbs && <meta property="og:image" content={ogImageAbs} />}
     <meta name="twitter:card" content="summary_large_image" />
