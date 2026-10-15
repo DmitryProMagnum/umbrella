@@ -357,3 +357,7 @@
 /* подвал: адрес офиса переносится аккуратно */
 .fcol__addr { max-width: 260px; line-height: 1.45; color: #E6E6E6; }
 @media (max-width: 767.98px) { .fcol__addr { padding-block: 13px; } }
+
+/* overflow: hidden делает блок прокручиваемым контейнером, и view()-анимации внутри
+   привязываются к нему, а не к странице (и стоят на месте). clip обрезает так же, но контейнером не становится. */
+.hero, .vcanvas, .ai__media, .footer { overflow: clip; }
