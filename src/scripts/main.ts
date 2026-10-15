@@ -240,12 +240,36 @@ if (heroVideo) {
 document.querySelectorAll<HTMLElement>('[data-video-player]').forEach((box) => {
   const video = box.querySelector('video')!;
   const btn = box.querySelector<HTMLButtonElement>('.vplayer__play')!;
+  // Хостинг (Cloudflare static assets) не отдаёт файл по частям (Range → 200 вместо 206),
+  // поэтому перемотка по сети не работает. Видео стартует сразу, а файл параллельно
+  // догружается целиком; затем плеер переключается на локальную копию с того же места.
+  let localCopy: 'none' | 'loading' | 'ready' = 'none';
+  const loadLocalCopy = async () => {
+    localCopy = 'loading';
+    try {
+      const res = await fetch(video.currentSrc || video.src);
+      if (!res.ok) { localCopy = 'none'; return; }
+      const url = URL.createObjectURL(await res.blob());
+      const t = video.currentTime;
+      const wasPlaying = !video.paused;
+      video.src = url;
+      video.addEventListener('loadedmetadata', () => {
+        video.currentTime = t;
+        if (wasPlaying) video.play().catch(() => {});
+      }, { once: true });
+      localCopy = 'ready';
+    } catch {
+      localCopy = 'none';
+      /* сеть оборвалась — остаётся обычное воспроизведение без перемотки */
+    }
+  };
   btn.addEventListener('click', () => {
     video.controls = true;
     box.classList.add('is-playing');
     video.play().catch(() => box.classList.remove('is-playing'));
     video.focus({ preventScroll: true });
     track('video_play');
+    if (localCopy === 'none') loadLocalCopy();
   });
   video.addEventListener('ended', () => {
     box.classList.remove('is-playing');
