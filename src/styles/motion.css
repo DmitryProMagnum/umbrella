@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Анимации на GSAP для всего сайта (src/scripts/motion.ts).
+   Здесь — то, что нужно CSS: плавная прокрутка Lenis, кнопки, маски SplitText.
+   ========================================================================== */
+
+/* Lenis: плавная прокрутка поверх нативной (липкие блоки и CSS scroll-анимации работают как раньше) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Общее CSS-появление [data-reveal] выключается — блоки анимирует GSAP.
+   Исключения со своими CSS-анимациями: вордмарк в подвале и шторка в блоке AI. */
+.motion-gsap [data-reveal]:not(.footer__word):not(.ai__media) { animation: none; opacity: 1; transform: none; }
+
+/* SplitText: строки заголовков выезжают из-под маски, у слов не рвутся пробелы */
+.split-line-mask { padding-bottom: .08em; margin-bottom: -.08em; }
+.split-word { will-change: transform, opacity, filter; }
+
+/* Подсветка текста при прокрутке: слова загораются по очереди */
+.scrub-words .split-word { opacity: .18; }
+
+/* Кнопки: заливка-волна снизу, перекат букв, рябь */
+.btn { position: relative; overflow: hidden; isolation: isolate; transition: color .4s var(--ease-out), border-color .4s, background-color .4s, box-shadow .4s, transform .2s var(--ease-out); }
+.btn::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 100%; width: 150%; aspect-ratio: 1; border-radius: 50%; background: var(--fill, var(--c1)); transform: translate(-50%, 0) scale(.3); transition: transform .6s var(--ease-out), top .6s var(--ease-out); pointer-events: none; }
+.btn--primary { --fill: var(--c1); }
+.btn--dark { --fill: var(--c2); }
+.btn--ghost, .btn--onDark { --fill: var(--c5); }
+@media (hover: hover) {
+  .btn:hover::before { top: 50%; transform: translate(-50%, -50%) scale(1); }
+  .btn--primary:hover { background: var(--c2); color: var(--c2); box-shadow: inset 0 0 0 1.5px var(--c2), 0 10px 30px #22f2cf40; }
+  .btn--dark:hover { background: var(--c1); color: var(--c1); box-shadow: 0 10px 30px #22f2cf33; }
+  .btn--dark:hover .icon { color: var(--c1); }
+  .btn--ghost:hover, .btn--onDark:hover { color: var(--c1); border-color: var(--c5); background: transparent; }
+  .btn:hover .icon { transform: translateX(4px) rotate(-45deg); }
+  .btn:hover .roll__a i { transform: translateY(-115%); }
+  .btn:hover .roll__b i { transform: none; }
+}
+.btn:focus-visible::before { top: 50%; transform: translate(-50%, -50%) scale(1); }
+.btn--primary:focus-visible { color: var(--c2); }
+.roll { display: inline-grid; overflow: hidden; line-height: 1.25; padding-block: .05em; flex-shrink: 0; }
+.roll > span { grid-area: 1 / 1; white-space: nowrap; }
+.roll i { display: inline-block; font-style: normal; transition: transform .5s var(--ease-out); transition-delay: calc(var(--i) * 14ms); }
+.roll__b i { transform: translateY(115%); }
+/* узкие экраны: длинные подписи кнопок помещаются целиком, а не обрезаются */
+@media (max-width: 400px) { .btn--lg { font-size: 15px; padding-inline: 18px; } }
+.ripple { position: absolute; z-index: 2; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: currentColor; opacity: .35; pointer-events: none; animation: ripple .65s var(--ease-out) forwards; }
+@keyframes ripple { to { transform: scale(var(--rs, 40)); opacity: 0; } }
+
+/* Мятное свечение за курсором на тёмных панелях */
+.has-glow { isolation: isolate; }
+.glow { position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .5s var(--ease-out);
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), #22f2cf26, transparent 65%); }
+.has-glow:hover .glow { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .roll i, .btn::before { transition: none; }
+  .glow { display: none; }
+}

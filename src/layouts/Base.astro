@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/scroll.css';
+import '../styles/motion.css';
 import { getContent } from '../content';
 const home = getContent(Astro.currentLocale);
 import { analytics } from '../lib/analytics';
@@ -102,5 +103,8 @@ const schema = [
   <body>
     <a class="skip-link" href="#main">{ui.skip}</a>
     <slot />
+    <script>
+      import '../scripts/motion.ts';
+    </script>
   </body>
 </html>
