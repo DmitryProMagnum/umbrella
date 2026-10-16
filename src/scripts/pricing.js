@@ -200,36 +200,6 @@
   });
   drawPlan();
 
-  // Кнопки: перекат букв на наведении
-  document.querySelectorAll('.btn').forEach(function (btn) {
-    [].slice.call(btn.childNodes).forEach(function (node) {
-      var text = node.nodeType === 3 ? node.textContent.trim() : '';
-      if (!text) return;
-      var letters = function () {
-        return text.split('').map(function (ch, i) { return '<i style="--i:' + i + '">' + (ch === ' ' ? '&nbsp;' : ch) + '</i>'; }).join('');
-      };
-      var roll = document.createElement('span');
-      roll.className = 'roll';
-      roll.setAttribute('aria-hidden', 'true');
-      roll.innerHTML = '<span class="roll__a">' + letters() + '</span><span class="roll__b">' + letters() + '</span>';
-      if (!btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', text);
-      btn.replaceChild(roll, node);
-    });
-  });
-
-  // Рябь от места нажатия
-  document.addEventListener('pointerdown', function (e) {
-    var b = e.target.closest('.btn, .seg button, .stepper button, .opt');
-    if (!b || reduce) return;
-    var r = b.getBoundingClientRect(), dot = document.createElement('span');
-    dot.className = 'ripple';
-    dot.style.left = (e.clientX - r.left) + 'px';
-    dot.style.top = (e.clientY - r.top) + 'px';
-    dot.style.setProperty('--rs', Math.ceil(Math.max(r.width, r.height) / 4));
-    b.appendChild(dot);
-    dot.addEventListener('animationend', function () { dot.remove(); });
-  });
-
   // Бегунок у переключателей
   document.querySelectorAll('.seg').forEach(function (seg) {
     var thumb = document.createElement('span');

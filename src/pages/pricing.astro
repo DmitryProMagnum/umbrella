@@ -371,7 +371,7 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
         <div class="demo__inner">
           <div class="demo__copy">
             <div class="demo__label">Связь. Контроль. Движение.</div>
-            <h2 class="demo__slogan" id="demo-title">Покажем Umbrella AI<br>на ваших данных</h2>
+            <h2 class="demo__slogan" id="demo-title">Покажем Umbrella&nbsp;AI<br>на ваших данных</h2>
             <p class="demo__text">Демонстрация идёт на вашей оргструктуре, а не на демо-данных — договориться можно на эту же неделю.</p>
           </div>
           <div class="demo__side">
@@ -410,6 +410,8 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 
   /* Точки-пользователи */
   .dots{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:clamp(3px,2px + .2vw,5px)}
+  /* на широких карточках (планшет, одна колонка) точки не раздуваются */
+  .dots,.dots + .scale{max-width:440px}
   .dots i{aspect-ratio:1;border-radius:50%;background:var(--c4);transition:background-color .25s,transform .25s var(--ease-spring);transition-delay:calc(var(--k,0) * 6ms)}
   .dots i.on{background:var(--c1);transform:scale(1.08)}
   .on-dark .dots i{background:#262626}
@@ -424,6 +426,7 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
   .p-hero{position:relative;isolation:isolate;overflow:clip;margin-top:calc(-1 * var(--header-h) - 1px);padding-block:calc(var(--header-h) + clamp(48px,36px + 4vw,96px)) clamp(56px,40px + 4vw,96px)}
   .p-hero__grid{display:grid;gap:clamp(40px,24px + 3vw,64px);align-items:center}
   @media (width>=1100px){.p-hero__grid{grid-template-columns:1.15fr .85fr}}
+  @media (width<1100px){.p-hero__grid > :last-child{width:100%;max-width:560px}}
   .p-hero .h1{margin-top:clamp(20px,16px + 1vw,32px);font-size:clamp(35px,20px + 4vw,80px)}
   .p-hero__lead{font-size:var(--fs-lead-hero);color:#d9d9d9;line-height:1.5;max-width:600px;margin:clamp(20px,16px + 1vw,32px) 0 0}
   .p-hero__chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
@@ -443,7 +446,8 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
 
   /* Полосы */
   .tiers{display:grid;gap:16px}
-  @media (width>=960px){.tiers{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
+  /* три колонки — только когда карточкам хватает ширины; на 960–1100 подписи и цены ломались */
+  @media (width>=1100px){.tiers{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
   .tier{display:flex;flex-direction:column;overflow:hidden}
   .tier__head{display:flex;justify-content:space-between;align-items:center;gap:12px}
   .tier .dots{margin-top:22px}
@@ -474,6 +478,8 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
   .calc{background:var(--c1);color:var(--c5);border-radius:var(--r-panel);padding:clamp(20px,14px + 2vw,56px);display:grid;gap:clamp(28px,20px + 2vw,56px);position:relative;overflow:hidden;isolation:isolate}
   .calc:after{content:"";position:absolute;z-index:-1;width:520px;height:520px;right:-180px;top:-220px;background:radial-gradient(closest-side,#22f2cf2e,transparent);pointer-events:none}
   @media (width>=1100px){.calc{grid-template-columns:1fr 1fr}}
+  /* колонки калькулятора сжимаются до ширины панели — иначе на 320 px число и ползунок уезжали за край */
+  .calc > *{min-width:0}
   .calc__ctl{display:flex;flex-direction:column;gap:30px}
   .field__top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
   .field__top label,.field__lbl{font-size:15px;color:var(--dk-2)}
@@ -557,6 +563,8 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
   .mgr__msg b{color:var(--c2);font-weight:500}
   .mgr__typing{align-self:flex-start;display:inline-flex;gap:4px;margin-top:10px;padding:8px 12px;background:#141414;border-radius:999px;border:1px solid var(--ln-2)}
   .mgr__typing i{width:6px;height:6px;border-radius:50%;background:var(--dk-4);animation:blink 1.2s infinite;animation-delay:calc(var(--k) * .2s)}
+  .pricebox .seg{display:flex}
+  .pricebox .seg button{flex:1 1 0;justify-content:center;padding-inline:8px}
   .pricebox{margin-top:24px;padding:18px;border-radius:20px;background:#141414;border:1px solid var(--ln-2);display:flex;flex-direction:column;gap:14px}
   .pricebox__v{display:flex;align-items:baseline;gap:8px}
   .pricebox__v b{font-size:clamp(32px,26px + 1.4vw,44px);font-weight:500;letter-spacing:-.04em;line-height:1;color:var(--c5);display:inline-block;transition:transform .3s var(--ease-spring),opacity .2s}
@@ -676,27 +684,6 @@ import xMint from '../assets/logo/umbrellacorp-x-mint.svg';
   /* Пересчёт цифр: короткая мятная вспышка */
   .ticking{animation:tick .75s var(--ease-out)}
   @keyframes tick{0%{text-shadow:0 0 0 #22f2cf00}30%{text-shadow:0 0 18px #22f2cf80}100%{text-shadow:0 0 0 #22f2cf00}}
-
-  /* Кнопки: заливка-волна снизу, перекат букв, рябь */
-  .btn{position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease-out),border-color .4s,background-color .4s,box-shadow .4s,transform .2s var(--ease-out)}
-  .btn:before{content:"";position:absolute;z-index:-1;left:50%;top:100%;width:150%;aspect-ratio:1;border-radius:50%;background:var(--fill,var(--c1));transform:translate(-50%,0) scale(.3);transition:transform .6s var(--ease-out),top .6s var(--ease-out)}
-  .btn:hover:before,.btn:focus-visible:before{top:50%;transform:translate(-50%,-50%) scale(1)}
-  .btn--primary{--fill:var(--c1)}
-  .btn--primary:hover{background:var(--c2);color:var(--c2);box-shadow:inset 0 0 0 1.5px var(--c2),0 10px 30px #22f2cf40}
-  .btn--dark{--fill:var(--c2)}
-  .btn--dark:hover{background:var(--c1);color:var(--c1);box-shadow:0 10px 30px #22f2cf33}
-  .btn--dark:hover .icon{color:var(--c1)}
-  .btn--ghost,.btn--onDark{--fill:var(--c5)}
-  .btn--ghost:hover,.btn--onDark:hover{color:var(--c1);border-color:var(--c5);background:transparent}
-  .btn:hover .icon{transform:translateX(4px) rotate(-45deg)}
-  .roll{display:inline-grid;overflow:hidden;line-height:1.25;padding-block:.05em}
-  .roll > span{grid-area:1/1;white-space:nowrap}
-  .roll i{display:inline-block;font-style:normal;transition:transform .5s var(--ease-out);transition-delay:calc(var(--i) * 14ms)}
-  .roll__b i{transform:translateY(115%)}
-  .btn:hover .roll__a i{transform:translateY(-115%)}
-  .btn:hover .roll__b i{transform:none}
-  .ripple{position:absolute;z-index:2;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:currentColor;opacity:.35;pointer-events:none;animation:ripple .65s var(--ease-out) forwards}
-  @keyframes ripple{to{transform:scale(var(--rs,40));opacity:0}}
 
   /* Переключатели: бегунок переезжает к выбранному варианту */
   .seg{position:relative;isolation:isolate}

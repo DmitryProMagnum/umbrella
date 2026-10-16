@@ -23,21 +23,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
       }, vars));
     };
 
-    // Заголовки секций: строки выезжают из-под маски
-    $('.sec-head').forEach(function (head) {
-      var tl = gsap.timeline({ scrollTrigger: { trigger: head, start: 'top 85%', once: true } });
-      var eyebrow = head.querySelector('.eyebrow'), h2 = head.querySelector('.h2'), lead = head.querySelector('.lead');
-      gsap.set([head.querySelector('.sec-head__title'), lead], { transition: 'none' });
-      if (eyebrow) tl.from(eyebrow, { opacity: 0, x: -24, duration: 0.6, ease: 'power2.out', clearProps: CLEAR });
-      if (h2) tl.from(h2, { opacity: 0, y: 60, skewY: 3, duration: 1, ease: 'expo.out', clearProps: CLEAR + ',skewY' }, '-=0.35');
-      if (lead) tl.from(lead, { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out', clearProps: CLEAR }, '-=0.7');
-    });
-
     // Hero: билет уезжает вверх при прокрутке, наклоняется за мышью
     var ticket = document.querySelector('.ticket');
     if (ticket) {
-      gsap.to(ticket, { yPercent: -18, rotate: -2, ease: 'none', scrollTrigger: { trigger: '.p-hero', start: 'top top', end: 'bottom top', scrub: true } });
-      gsap.to('.p-hero .h1', { yPercent: 25, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: '.p-hero', start: 'top top', end: 'bottom top', scrub: true } });
+      // Параллакс только на десктопе: на телефоне билет стоит под текстом и наезжал бы на него
+      if (desktop) gsap.to(ticket, { yPercent: -10, rotate: -2, ease: 'none', scrollTrigger: { trigger: '.p-hero', start: 'top top', end: 'bottom top', scrub: true } });
       gsap.from('.ticket__float', { scale: 0, rotate: -12, transformOrigin: '100% 100%', duration: 0.8, delay: 1, ease: 'back.out(2)' });
       if (desktop) {
         gsap.set(ticket, { transformPerspective: 900 });
@@ -53,12 +43,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
       }
     }
 
-    // Полосы: карточки поднимаются веером с 3D-поворотом
+    // Полосы: карточки поднимаются по очереди. Без 3D-поворота: в перспективе верх карточки
+    // раздувался и наезжал на заголовок и соседние карточки.
     var tiers = $('.tier');
     gsap.set(tiers, { transition: 'none' });
     gsap.from(tiers, {
-      opacity: 0, y: 120, rotationX: -25, transformPerspective: 1000, transformOrigin: '50% 100%',
-      stagger: 0.14, duration: 1.1, ease: 'expo.out', clearProps: CLEAR + ',rotationX,transformPerspective',
+      opacity: 0, y: 60, scale: 0.97, transformOrigin: '50% 100%',
+      stagger: 0.12, duration: 0.9, ease: 'power3.out', clearProps: CLEAR + ',scale',
       scrollTrigger: { trigger: '.tiers', start: 'top 85%', once: true }
     });
     gsap.from('.tier--hit .tier__head .status', { scale: 0, duration: 0.6, delay: 0.7, ease: 'back.out(3)', scrollTrigger: { trigger: '.tiers', start: 'top 85%', once: true } });
@@ -118,24 +109,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
     // Финальный блок: знак вращается вместе с прокруткой, слоган собирается по строкам
     gsap.to('.demo__x', { rotate: 90, scale: 1.25, ease: 'none', scrollTrigger: { trigger: '.demo', start: 'top bottom', end: 'bottom top', scrub: true } });
-    reveal($('.demo'), { y: 80, scale: 0.94, duration: 1.1 });
     reveal($('.demo__copy > *, .demo__actions .btn'), { y: 40, stagger: 0.1, duration: 0.8 }, '.demo', 'top 70%');
 
-    // Магнитные кнопки
-    if (desktop) {
-      $('.btn--primary, .btn--dark').forEach(function (b) {
-        var bx = gsap.quickTo(b, 'x', { duration: 0.4, ease: 'power3' }), by = gsap.quickTo(b, 'y', { duration: 0.4, ease: 'power3' });
-        b.addEventListener('mousemove', function (e) {
-          var r = b.getBoundingClientRect();
-          bx((e.clientX - r.left - r.width / 2) * 0.25); by((e.clientY - r.top - r.height / 2) * 0.35);
-        });
-        b.addEventListener('mouseleave', function () { bx(0); by(0); });
-      });
-    }
-
-    // Полоса прогресса прокрутки (элемент из стилей сайта)
-    var prog = document.querySelector('.scroll-progress');
-    if (prog) gsap.fromTo(prog, { scaleX: 0 }, { scaleX: 1, ease: 'none', transformOrigin: '0 50%', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
   });
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
